@@ -1,0 +1,24 @@
+body {
+	margin: 0;
+	font-family: 'Open Sans';
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	src: local('Opem Sans'), url(./fonts/OpenSans-Regular.ttf) format('truetype');
+}
+@font-face {
+	font-family: 'Poppins';
+	src: local('Poppins'), url(./fonts/Poppins-Regular.ttf) format('truetype');
+}
+@font-face {
+	font-family: 'Arimo';
+	src: local('Arimo'), url(./fonts/Arimo-Regular.ttf) format('truetype');
+}
+
+code {
+	font-family: 'Open Sans', source-code-pro, Menlo, Monaco, Consolas,
+		'Courier New', monospace;
+}

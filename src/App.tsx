@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './styles/App.css'
+import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+import { useMediaQuery } from 'react-responsive'
+
+import store from 'store'
+import SignUp from 'features/signup'
+import Homepage from 'features/homepage'
+
+import { AuthRoute, ProtectedRoute } from './utils/routeUtils'
+// import LinkedInPopUp from 'components/LinkedIn/LinkedInPopUp'
+
+import MobileNav from 'features/navbar/mobile'
+import DesktopNav from 'features/navbar/desktop'
+
+export const persistor = persistStore(store)
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const isTabletOrMobileDevice = useMediaQuery({
+		query: '(max-device-width: 1224px)'
+	})
+	return (
+		<div className="App">
+			<Provider store={store}>
+				<PersistGate loading={null} persistor={persistor}>
+					<Router>
+						{!isTabletOrMobileDevice && (
+							<ProtectedRoute component={DesktopNav} />
+						)}
+						<Switch>
+							{/* <Route path="/linkedin" component={LinkedInPopUp} /> */}
+							<AuthRoute path="/signup" component={SignUp} />
+
+							<ProtectedRoute path="/" component={Homepage} />
+						</Switch>
+						{isTabletOrMobileDevice && <ProtectedRoute component={MobileNav} />}
+					</Router>
+				</PersistGate>
+			</Provider>
+		</div>
+	)
 }
 
-export default App;
+export default App

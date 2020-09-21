@@ -1,0 +1,199 @@
+import React, { FunctionComponent, useState } from 'react'
+import styled from '@emotion/styled'
+import { useDispatch } from 'react-redux'
+import { signup } from 'store/slices/userSlice'
+import TextInput from 'components/inputs/text'
+import { logo } from 'assets/images'
+import Login from 'features/login'
+
+const SignUp: FunctionComponent = () => {
+	const dispatch = useDispatch()
+	const [email, setEmail] = useState('')
+	const [username, setUsername] = useState('')
+	const [password1, setPassword1] = useState('')
+	const [password2, setPassword2] = useState('')
+
+	const [login, setLogin] = useState(false)
+
+	const [error, setError] = useState('')
+	const handleSignUp = () => {
+		if (!username) return setError('Your Name (First Last) is required')
+		if (!email) return setError('Your Email is required')
+		if (password1 !== password2) return setError('passwords do not match')
+		dispatch(
+			signup(
+				{
+					email,
+					username
+				},
+				password1
+			)
+		)
+	}
+
+	return (
+		<Container>
+			<Logo src={logo} />
+			<LoginButton onClick={() => setLogin(true)}>Login</LoginButton>
+			{login && <Grey onClick={() => setLogin(false)} />}
+			{login && <Login />}
+			<Content>
+				<Left>
+					<Header>
+						Sign up to get help on optimizing your business bottomline.
+					</Header>
+					<SubHeader>
+						Solve all your finance and HR needs at your fingertip, with a
+						flexible and connected team of accounting, HR, and finance experts
+						accessible on-demand. Try it for FREE.
+					</SubHeader>
+				</Left>
+				<Right>
+					{error && <Error>{error}</Error>}
+					<TextInput
+						handleInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setUsername(e.target.value)
+						}
+						value={username}
+						label={'Your Name (First Last) *'}
+					/>
+
+					<TextInput
+						handleInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setEmail(e.target.value)
+						}
+						value={email}
+						label={'Your Email *'}
+					/>
+
+					<TextInput
+						handleInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setPassword1(e.target.value)
+						}
+						type="password"
+						value={password1}
+						label={'Password *'}
+					/>
+					<TextInput
+						handleInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setPassword2(e.target.value)
+						}
+						type="password"
+						value={password2}
+						label={'Confirm Password *'}
+					/>
+					{error && <Error>{error}</Error>}
+					<SubmitContainer>
+						<SubmitButton onClick={handleSignUp}>Submit</SubmitButton>
+					</SubmitContainer>
+				</Right>
+			</Content>
+		</Container>
+	)
+}
+
+const Container = styled.div`
+	padding: 20px;
+	height: 100vh;
+	overflow: scroll;
+`
+const Content = styled.div`
+	display: flex;
+	margin-top: 100px;
+`
+
+const Left = styled.div`
+	width: 50%;
+`
+
+const Right = styled.div``
+
+const Logo = styled.img`
+	height: 26px;
+	width: 140px;
+	margin-top: 100px;
+`
+
+const Error = styled.div`
+	border-radius: 2px;
+	background: #cc3b3b
+		url(//assets.squarespace.com/universal/images-v6/standard/icon_close_7_light.png)
+		no-repeat 9px 50%;
+	color: #fff;
+	display: inline-block;
+	font-size: 13px;
+	line-height: 23px;
+	margin: 12px 0;
+	padding: 5px 15px 3px 25px;
+`
+
+const Header = styled.h3`
+	font-family: Poppins;
+	font-style: normal;
+	font-size: calc(1.44vh + 1rem);
+	line-height: 1.3328;
+	letter-spacing: -0.408px;
+	color: #404040;
+	width: 90%;
+	text-align: left;
+	margin-bottom: 20px;
+`
+
+const SubHeader = styled.div`
+	font-family: Poppins;
+	font-style: normal;
+	font-size: 15px;
+	line-height: 25px;
+	letter-spacing: -0.408px;
+	color: #404040;
+	width: 90%;
+	margin-top: none;
+	text-align: left;
+	margin-bottom: 20px;
+`
+
+const SubmitButton = styled.button`
+	background: transparent !important;
+	color: #000 !important;
+	border: 2px solid #000 !important;
+	font-family: Poppins;
+	font-weight: 400;
+	font-style: normal;
+	letter-spacing: 0em;
+	text-transform: none;
+	line-height: 1.9em;
+	font-size: calc(0vh + 1rem) !important;
+	padding: 0.8em 1.336em;
+	margin-bottom: 20px;
+`
+
+const SubmitContainer = styled.div`
+	width: 90%;
+	display: flex;
+	justify-content: flex-start;
+	margin-top: 20px;
+	margin-bottom: 20px;
+`
+const Grey = styled.div`
+	height: 100vh;
+	width: 100vw;
+	z-index: 50;
+	opacity: 0.6;
+	background-color: #777375;
+	position: absolute;
+	left: 0;
+	top: 0;
+`
+
+const LoginButton = styled.div`
+	position: absolute;
+	width: 87px;
+	height: 17px;
+	left: 90%;
+	top: 4%;
+	&:hover {
+		cursor: pointer;
+	}
+`
+
+export default SignUp
