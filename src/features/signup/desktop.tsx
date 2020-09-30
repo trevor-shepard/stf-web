@@ -40,12 +40,10 @@ const SignUp: FunctionComponent = () => {
 			<Content>
 				<Left>
 					<Header>
-						Sign up to get help on optimizing your business bottomline.
+						Sign up to challange your friends
 					</Header>
 					<SubHeader>
-						Solve all your finance and HR needs at your fingertip, with a
-						flexible and connected team of accounting, HR, and finance experts
-						accessible on-demand. Try it for FREE.
+						Leave invasive data mining tech giants in the past and play secure social games with your friends
 					</SubHeader>
 				</Left>
 				<Right>

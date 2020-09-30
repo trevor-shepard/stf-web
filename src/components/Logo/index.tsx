@@ -7,8 +7,8 @@ const Component: FunctionComponent = () => {
 
 const Logo = styled.img`
 	position: absolute;
-	width: 87px;
-	height: 17px;
+	width: 51px;
+    height: 39px;
 	left: 2%;
 	top: 2%;
 `
