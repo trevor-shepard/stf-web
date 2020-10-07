@@ -39,11 +39,10 @@ const SignUp: FunctionComponent = () => {
 			{login && <Login />}
 			<Content>
 				<Left>
-					<Header>
-						Sign up to challange your friends
-					</Header>
+					<Header>Sign up to challange your friends</Header>
 					<SubHeader>
-						Leave invasive data mining tech giants in the past and play secure social games with your friends
+						Leave invasive data mining tech giants in the past and play secure
+						social games with your friends
 					</SubHeader>
 				</Left>
 				<Right>

@@ -4,31 +4,10 @@ import { AppThunk } from '..'
 
 import firebase, { auth, db } from 'utils/firebase'
 
-export interface UserState {
-	username: string | null
-	email: string | null
-	uid: string | null
-	error: string | null
-}
+import { UserState, User, UserUpdate, UserWithoutId } from 'types'
 
-export interface User {
-	username: string
-	uid: string
-	email: string
-}
-
-export interface ExpertUser {
-	username: string
-	uid: string
-	email: string
-}
-
-interface UserWithoutId {
-	username: string
-	email: string
-}
-
-interface UserUpdate {}
+import { clearGroups, fetchUserGroups } from './groupsSlice'
+import { clearMembers } from './membersSlice'
 
 const initialState: UserState = {
 	username: null,
@@ -49,6 +28,7 @@ const user = createSlice({
 		},
 		clear() {
 			firebase.auth().signOut()
+
 			return {
 				username: null,
 				email: null,
@@ -93,6 +73,8 @@ export const login = (email: string, password: string): AppThunk => async (
 			.get()
 			.then(doc => doc.data())) as User
 
+		dispatch(fetchUserGroups(uid))
+
 		dispatch(recieveUser(user))
 	} catch (error) {
 		dispatch(userError(error.message))
@@ -128,6 +110,7 @@ export const signup = (
 			})
 		)
 	} catch (error) {
+		
 		dispatch(userError(error.message))
 	}
 }
@@ -149,4 +132,6 @@ export const update = (
 
 export const logout = (): AppThunk => async dispatch => {
 	dispatch(clear())
+	dispatch(clearGroups())
+	dispatch(clearMembers())
 }

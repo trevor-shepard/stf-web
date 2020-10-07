@@ -18,6 +18,12 @@ body {
 	src: local('Arimo'), url(./fonts/Arimo-Regular.ttf) format('truetype');
 }
 
+@font-face {
+	font-family: 'Mulish';
+	src: local('Mulish'),
+		url(./fonts/Mulish-VariableFont_wght.ttf) format('truetype');
+}
+
 code {
 	font-family: 'Open Sans', source-code-pro, Menlo, Monaco, Consolas,
 		'Courier New', monospace;

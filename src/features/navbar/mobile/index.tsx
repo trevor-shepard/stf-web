@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { Link, useLocation } from 'react-router-dom'
-import { Home, Profile } from 'assets/icons'
+import { Home, Profile, Group } from 'assets/icons'
 
 const MobileNav: FunctionComponent = () => {
 	const { pathname } = useLocation()
@@ -13,6 +13,10 @@ const MobileNav: FunctionComponent = () => {
 			<Tab current={pathname === '/' ? 'true' : 'false'} to="/">
 				<TabIcon src={Home} alt=" " />
 				Home
+			</Tab>
+			<Tab current={pathname === '/groups' ? 'true' : 'false'} to="/groups">
+				<TabIcon src={Group} alt=" " />
+				Groups
 			</Tab>
 
 			<Tab current={pathname === '/profile' ? 'true' : 'false'} to="/profile">

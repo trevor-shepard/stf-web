@@ -9,6 +9,7 @@ import { useMediaQuery } from 'react-responsive'
 import store from 'store'
 import SignUp from 'features/signup'
 import Homepage from 'features/homepage'
+import Groups from 'features/groups'
 
 import { AuthRoute, ProtectedRoute } from './utils/routeUtils'
 // import LinkedInPopUp from 'components/LinkedIn/LinkedInPopUp'
@@ -34,6 +35,7 @@ function App() {
 							{/* <Route path="/linkedin" component={LinkedInPopUp} /> */}
 							<AuthRoute path="/signup" component={SignUp} />
 
+							<ProtectedRoute path="/groups" component={Groups} />
 							<ProtectedRoute path="/" component={Homepage} />
 						</Switch>
 						{isTabletOrMobileDevice && <ProtectedRoute component={MobileNav} />}
