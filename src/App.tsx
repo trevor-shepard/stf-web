@@ -10,7 +10,7 @@ import store from 'store'
 import SignUp from 'features/signup'
 import Homepage from 'features/homepage'
 import Groups from 'features/groups'
-
+import Profile from 'features/profile'
 import { AuthRoute, ProtectedRoute } from './utils/routeUtils'
 // import LinkedInPopUp from 'components/LinkedIn/LinkedInPopUp'
 
@@ -36,6 +36,7 @@ function App() {
 							<AuthRoute path="/signup" component={SignUp} />
 
 							<ProtectedRoute path="/groups" component={Groups} />
+							<ProtectedRoute path="/profile" component={Profile} />
 							<ProtectedRoute path="/" component={Homepage} />
 						</Switch>
 						{isTabletOrMobileDevice && <ProtectedRoute component={MobileNav} />}

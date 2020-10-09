@@ -22,6 +22,10 @@ export interface UserUpdate {
 	username: string
 }
 
+export interface Votes {
+	[uid: string]: number
+}
+
 export interface Group {
 	id: string
 	name: string
@@ -30,12 +34,8 @@ export interface Group {
 		[uid: string]: boolean
 	}
 	activities: {
-		[verb: string]: {
-			unit: string
-			votes: {
-				[uid: string]: number
-			}
-		}
+		// verb*unit (spaces are _)
+		[action: string]: Votes
 	}
 }
 

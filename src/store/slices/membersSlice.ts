@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
 import { AppThunk } from '..'
 
 import { db } from 'utils/firebase'
@@ -37,7 +36,7 @@ const members = createSlice({
 		},
 		recieveMember(state, reduxAction: PayloadAction<Member>) {
 			const member = reduxAction.payload
-			
+
 			return {
 				...state,
 				[member.uid]: member
@@ -123,4 +122,28 @@ export const fetchMembersActions = (
 
 		dispatch(recieveMemberActions(actions))
 	} catch (e) {}
+}
+
+export const recordActivity = (
+	date: number,
+	name: string,
+	quantity: number
+): AppThunk => async (dispatch, getState) => {
+	const {
+		user: { uid }
+	} = getState()
+
+	const ref = await db.collection('actions').doc()
+
+	const action: Action = {
+		uid: uid as string,
+		name,
+		quantity,
+		date,
+		id: ref.id
+	}
+
+	await ref.set(action)
+
+	dispatch(recieveAction(action))
 }

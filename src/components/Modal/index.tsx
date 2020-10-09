@@ -17,7 +17,7 @@ const GreyArea = styled.div`
 	height: 100vh;
 	width: 100vw;
 	z-index: 50;
-	opacity: 0.6;
+	/* opacity: 0.6; */
 	background-color: #777375;
 	position: absolute;
 	left: 0;
@@ -28,17 +28,18 @@ const GreyArea = styled.div`
 `
 
 const Modal = styled.div`
+	z-index: 55;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 298px;
 	height: 340px;
-
 	background: #ffffff;
 	border: 1px solid #000000;
 	box-sizing: border-box;
 	border-radius: 10px;
+	opacity: 1;
 `
 
 export default MobileGroups

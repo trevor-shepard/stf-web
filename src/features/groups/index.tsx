@@ -5,10 +5,13 @@ import { RootState } from 'store/rootReducer'
 import Header from 'components/Header'
 import GroupDisplay from 'features/groups/GroupDisplay'
 import CreateGroup from './CreateGroup'
+import AddActivity from './AddActivity'
 
 const MobileGroups: FunctionComponent = () => {
 	const groups = useSelector((state: RootState) => state.groups)
-
+	const [display, setDisplay] = useState<'fame' | 'shame' | 'members'>(
+		'members'
+	)
 	const [groupID, setGroupID] = useState('')
 
 	const [modal, setModal] = useState(false)
@@ -23,14 +26,15 @@ const MobileGroups: FunctionComponent = () => {
 
 	return (
 		<Container>
-			{modal && <CreateGroup hideModal={() => setModal(false)} />}
+			{(modal && display === 'members' )&& <CreateGroup hideModal={() => setModal(false)} />}
+			{(modal && (display === 'shame' || display === 'fame' ))&& <AddActivity groupID={groupID} hideModal={() => setModal(false)} />}
 			<Header
 				groupID={groupID}
 				groups={groups}
 				handleAdd={() => setModal(!modal)}
 				selectGroup={setGroupID}
 			/>
-			{group ? <GroupDisplay group={group} /> : 'create or join a group'}
+			{group ? <GroupDisplay group={group} display={display} setDisplay={setDisplay} /> : 'create or join a group'}
 		</Container>
 	)
 }

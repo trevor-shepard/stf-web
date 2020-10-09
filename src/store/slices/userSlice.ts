@@ -110,7 +110,6 @@ export const signup = (
 			})
 		)
 	} catch (error) {
-		
 		dispatch(userError(error.message))
 	}
 }

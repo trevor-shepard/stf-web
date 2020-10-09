@@ -18,7 +18,6 @@ const MobileNav: FunctionComponent = () => {
 				<TabIcon src={Group} alt=" " />
 				Groups
 			</Tab>
-
 			<Tab current={pathname === '/profile' ? 'true' : 'false'} to="/profile">
 				<TabIcon src={Profile} alt=" " />
 				Profile

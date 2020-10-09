@@ -37,12 +37,8 @@ export const { recieveGroup, recieveGroups, clearGroups } = groups.actions
 
 export default groups.reducer
 
-export const fetchUserGroups = (uid: string): AppThunk => async (
-	dispatch,
-	getState
-) => {
+export const fetchUserGroups = (uid: string): AppThunk => async dispatch => {
 	try {
-		const state = getState()
 		const groups = await db
 			.collection('groups')
 			.where('members', 'array-contains', uid)
@@ -82,17 +78,11 @@ export const createGroup = (name: string): AppThunk => async (
 			},
 			members: [uid],
 			activities: {
-				run: {
-					unit: 'mile',
-					votes: {
-						example: 4
-					}
+				run$mile: {
+					example: 4
 				},
-				sleep_in: {
-					unit: 'hour',
-					votes: {
-						example: -4
-					}
+				sleep_in$hour: {
+					example: -4
 				}
 			}
 		}
@@ -149,18 +139,15 @@ export const requestVote = (
 
 		const activities = group.activities
 
-		const { unit, votes } = activities[verb]
+		const votes = activities[verb]
 
 		const updatedGroup = {
 			...group,
 			activities: {
 				...activities,
 				[verb]: {
-					unit,
-					votes: {
-						...votes,
-						[uid]: vote
-					}
+					...votes,
+					[uid]: vote
 				}
 			}
 		}
@@ -197,8 +184,6 @@ export const requestRemoveExampleVote = (
 
 		const activities = group.activities
 
-		const { unit } = activities[verb]
-
 		const updatedVotes = Object.keys(votes).reduce((acc, key) => {
 			if (key !== 'example')
 				return {
@@ -212,9 +197,39 @@ export const requestRemoveExampleVote = (
 			...group,
 			activities: {
 				...activities,
+				[verb]: updatedVotes
+			}
+		}
+
+		await db
+			.collection('groups')
+			.doc(groupID)
+			.update(updatedGroup)
+
+		dispatch(recieveGroup(updatedGroup))
+	} catch (error) {}
+}
+
+export const addActivity = (
+	groupID: string,
+	verb: string,
+	vote: number
+): AppThunk => async (dispatch, getState) => {
+	try {
+		const state = getState()
+
+		const uid = state.user.uid as string
+
+		const group = state.groups[groupID]
+
+		const activities = group.activities
+
+		const updatedGroup = {
+			...group,
+			activities: {
+				...activities,
 				[verb]: {
-					unit,
-					votes: updatedVotes
+					[uid]: vote
 				}
 			}
 		}

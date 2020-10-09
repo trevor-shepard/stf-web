@@ -2,21 +2,27 @@ import React, { FunctionComponent, useState } from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
-import Logout from 'components/Logout'
 import Header from 'components/Header'
-
+import RecordActivity from './RecordActivity'
 const MobileHomepage: FunctionComponent = () => {
 	const groups = useSelector((state: RootState) => state.groups)
 	// const members = useSelector((state: RootState) => state.members)
 
 	const [groupID, setGroupID] = useState('')
+	const [showRecord, setShowRecord] = useState(false)
 
 	// const groupNames = Object.values(groups).map(group => group.name)
 
 	return (
 		<Container>
-			<Logout />
-			<Header groupID={groupID} groups={groups} selectGroup={setGroupID} />
+			<Header
+				groupID={groupID}
+				groups={groups}
+				selectGroup={setGroupID}
+				handleAdd={() => setShowRecord(true)}
+			/>
+			{showRecord && <RecordActivity hideModal={() => setShowRecord(false)} />}
+
 			<Feed>No feed yet</Feed>
 		</Container>
 	)

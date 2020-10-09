@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, Dispatch, SetStateAction } from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
@@ -6,16 +6,16 @@ import { Group } from 'types'
 import Vote from './Vote'
 interface Props {
 	group: Group
+	display: 'fame' | 'shame' | 'members'
+	setDisplay: Dispatch<SetStateAction<"fame" | "shame" | "members">>
 }
 
-const GroupDisplay: FunctionComponent<Props> = ({ group }) => {
+const GroupDisplay: FunctionComponent<Props> = ({ group, display, setDisplay }) => {
 	const allMembers = useSelector((state: RootState) => state.members)
-
-	const [display, setDisplay] = useState<'fame' | 'shame' | 'members'>('fame')
-
-	const [verb, setVerb] = useState('')
-
+	
+	const [name, setName] = useState('')
 	const { activities } = group
+
 	let members: (JSX.Element | null)[] = Object.values(group.members).map(id => {
 		const member = allMembers[id]
 		return member ? <li>{member.username}</li> : null
@@ -24,16 +24,16 @@ const GroupDisplay: FunctionComponent<Props> = ({ group }) => {
 	// sort activities
 	let fame: (JSX.Element | Element)[] = []
 	let shame: (JSX.Element | Element)[] = []
-	const verbs = Object.keys(activities) as string[]
-	for (const verb of verbs) {
-		const { votes, unit } = activities[verb]
+	const names = Object.keys(activities) as string[]
+	for (const name of names) {
+		const [verb, unit] = name.split('$')
+		const votes = activities[name]
 		const vote = Object.values(votes).reduce((acc, curr) => acc + curr)
 		const listItem = (
-			<li onClick={() => setVerb(verb)}>
+			<li onClick={() => setName(name)}>
 				<div>
-					{verb} 1 {unit}
+					{verb.split('_').join(' ')} 1 {unit}
 				</div>
-				<div> vote </div>
 			</li>
 		)
 		if (vote > 0) {
@@ -45,15 +45,21 @@ const GroupDisplay: FunctionComponent<Props> = ({ group }) => {
 
 	return (
 		<Container>
-			{verb !== '' && (
+			{name !== '' && (
 				<Vote
-					hideModal={() => setVerb('')}
+					hideModal={() => setName('')}
 					groupID={group.id}
-					verb={verb}
-					activity={group.activities[verb]}
+					name={name}
+					votes={group.activities[name]}
 				/>
 			)}
 			<DisplayToggle>
+				<ToggleSelector
+					selected={display === 'members'}
+					onClick={() => setDisplay('members')}
+				>
+					members
+				</ToggleSelector>
 				<ToggleSelector
 					selected={display === 'fame'}
 					onClick={() => setDisplay('fame')}
@@ -65,12 +71,6 @@ const GroupDisplay: FunctionComponent<Props> = ({ group }) => {
 					onClick={() => setDisplay('shame')}
 				>
 					shame
-				</ToggleSelector>
-				<ToggleSelector
-					selected={display === 'members'}
-					onClick={() => setDisplay('members')}
-				>
-					members
 				</ToggleSelector>
 			</DisplayToggle>
 			{display === 'fame' && fame}

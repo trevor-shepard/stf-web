@@ -9,27 +9,27 @@ import { requestVote } from 'store/slices/groupsSlice'
 interface Props {
 	hideModal: () => void
 
-	verb: string
-	activity: {
-		unit: string
-		votes: {
-			[uid: string]: number
-		}
+	name: string
+	votes: {
+		[uid: string]: number
 	}
+
 	groupID: string
 }
 
 const Vote: FunctionComponent<Props> = ({
 	hideModal,
-	verb,
 	groupID,
-	activity: { unit, votes }
+	name,
+	votes
 }) => {
 	const uid = useSelector((state: RootState) => state.user.uid) as string
 	const members = useSelector((state: RootState) => state.members)
 	const [vote, setVote] = useState(0)
 	const [currAvg, setCurrAvg] = useState(0)
 	const [loading, setLoading] = useState(false)
+
+	const [verb, unit] = name.split('$')
 
 	useEffect(() => {
 		if (votes[uid]) setVote(votes[uid])
