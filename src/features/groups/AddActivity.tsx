@@ -27,8 +27,8 @@ const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
 			const activity = `${name.split(' ').join('_')}$${unit
 				.split(' ')
 				.join('_')}`.toLocaleLowerCase()
-            await dispatch(addActivity(groupID, activity, vote))
-            hideModal()
+			await dispatch(addActivity(groupID, activity, vote))
+			hideModal()
 		}
 	}
 

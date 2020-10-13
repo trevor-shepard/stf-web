@@ -37,6 +37,8 @@ const members = createSlice({
 		recieveMember(state, reduxAction: PayloadAction<Member>) {
 			const member = reduxAction.payload
 
+			debugger
+
 			return {
 				...state,
 				[member.uid]: member

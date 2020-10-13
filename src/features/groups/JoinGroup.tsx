@@ -1,30 +1,33 @@
 import React, { FunctionComponent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import Modal from 'components/Modal'
+import { useHistory } from 'react-router-dom'
 import TextInput from 'components/inputs/text'
-import { createGroup } from 'store/slices/groupsSlice'
+import { joinGroup } from 'store/slices/groupsSlice'
 
 interface Props {
 	toggleModal: () => void
 }
 
-const CreateGroup: FunctionComponent<Props> = ({ toggleModal }) => {
-	const [name, setName] = useState('')
+const JoinGroup: FunctionComponent<Props> = ({ toggleModal }) => {
+	const history = useHistory()
+	const [code, setCode] = useState('')
 	const [error, setError] = useState('')
 	const [loading, setLoading] = useState(false)
 
 	const dispatch = useDispatch()
 
 	const handleCreate = async () => {
-		if (name === '') {
-			setError('name cant be blank')
+		if (code === '') {
+			setError('code cant be blank')
 		} else {
 			try {
 				setLoading(true)
-				await dispatch(createGroup(name))
+				await dispatch(joinGroup(code))
+				// change this
+				history.push('/')
 			} catch (error) {
-				setError('name cant be blank')
+				setError('something went wrong, please check group code')
 				setLoading(false)
 			}
 		}
@@ -34,15 +37,17 @@ const CreateGroup: FunctionComponent<Props> = ({ toggleModal }) => {
 		<>loading</>
 	) : (
 		<>
-			<div onClick={toggleModal}>Join Group</div>
-			<Title>Start a Group</Title>
-			{error !== '' && error}
-			<TextInput
-				handleInput={e => setName(e.target.value)}
-				value={name}
-				label={'Group Name'}
-			/>
-			<SubmitButton onClick={handleCreate}>Submit</SubmitButton>
+			<>
+				<div onClick={toggleModal}>Create Group</div>
+				<Title>Join Group</Title>
+				{error !== '' && error}
+				<TextInput
+					handleInput={e => setCode(e.target.value)}
+					value={code}
+					label={'Group Code'}
+				/>
+				<SubmitButton onClick={handleCreate}>Submit</SubmitButton>
+			</>
 		</>
 	)
 }
@@ -63,4 +68,4 @@ const SubmitButton = styled.button`
 	text-transform: capitalize;
 `
 
-export default CreateGroup
+export default JoinGroup

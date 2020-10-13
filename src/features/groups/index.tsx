@@ -6,6 +6,8 @@ import Header from 'components/Header'
 import GroupDisplay from 'features/groups/GroupDisplay'
 import CreateGroup from './CreateGroup'
 import AddActivity from './AddActivity'
+import Modal from 'components/Modal'
+import JoinGroup from './JoinGroup'
 
 const MobileGroups: FunctionComponent = () => {
 	const groups = useSelector((state: RootState) => state.groups)
@@ -15,6 +17,7 @@ const MobileGroups: FunctionComponent = () => {
 	const [groupID, setGroupID] = useState('')
 
 	const [modal, setModal] = useState(false)
+	const [join, setJoin] = useState(false)
 
 	const group = groups[groupID]
 
@@ -26,15 +29,29 @@ const MobileGroups: FunctionComponent = () => {
 
 	return (
 		<Container>
-			{(modal && display === 'members' )&& <CreateGroup hideModal={() => setModal(false)} />}
-			{(modal && (display === 'shame' || display === 'fame' ))&& <AddActivity groupID={groupID} hideModal={() => setModal(false)} />}
+			{modal && display === 'members' && (
+				<Modal hideModal={() => setModal(false)}>
+					{join ? (
+						<JoinGroup toggleModal={() => setJoin(false)} />
+					) : (
+						<CreateGroup toggleModal={() => setJoin(true)} />
+					)}
+				</Modal>
+			)}
+			{modal && (display === 'shame' || display === 'fame') && (
+				<AddActivity groupID={groupID} hideModal={() => setModal(false)} />
+			)}
 			<Header
 				groupID={groupID}
 				groups={groups}
 				handleAdd={() => setModal(!modal)}
 				selectGroup={setGroupID}
 			/>
-			{group ? <GroupDisplay group={group} display={display} setDisplay={setDisplay} /> : 'create or join a group'}
+			{group ? (
+				<GroupDisplay group={group} display={display} setDisplay={setDisplay} />
+			) : (
+				'create or join a group'
+			)}
 		</Container>
 	)
 }

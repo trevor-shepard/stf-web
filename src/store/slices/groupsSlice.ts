@@ -116,6 +116,8 @@ export const joinGroup = (id: string): AppThunk => async (
 				members: [...members, uid]
 			})
 
+		for (const member of members) dispatch(fetchMember(member))
+
 		dispatch(
 			recieveGroup({
 				...group,

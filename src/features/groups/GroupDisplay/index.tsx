@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useState, Dispatch, SetStateAction } from 'react'
+import React, {
+	FunctionComponent,
+	useState,
+	Dispatch,
+	SetStateAction
+} from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
@@ -7,12 +12,16 @@ import Vote from './Vote'
 interface Props {
 	group: Group
 	display: 'fame' | 'shame' | 'members'
-	setDisplay: Dispatch<SetStateAction<"fame" | "shame" | "members">>
+	setDisplay: Dispatch<SetStateAction<'fame' | 'shame' | 'members'>>
 }
 
-const GroupDisplay: FunctionComponent<Props> = ({ group, display, setDisplay }) => {
+const GroupDisplay: FunctionComponent<Props> = ({
+	group,
+	display,
+	setDisplay
+}) => {
 	const allMembers = useSelector((state: RootState) => state.members)
-	
+
 	const [name, setName] = useState('')
 	const { activities } = group
 

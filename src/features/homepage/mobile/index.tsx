@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import Header from 'components/Header'
 import RecordActivity from './RecordActivity'
+import Feed from './Feed'
 const MobileHomepage: FunctionComponent = () => {
 	const groups = useSelector((state: RootState) => state.groups)
 	// const members = useSelector((state: RootState) => state.members)
@@ -23,7 +24,7 @@ const MobileHomepage: FunctionComponent = () => {
 			/>
 			{showRecord && <RecordActivity hideModal={() => setShowRecord(false)} />}
 
-			<Feed>No feed yet</Feed>
+			<Feed groupID={groupID} />
 		</Container>
 	)
 }
@@ -34,13 +35,6 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-`
-
-const Feed = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	height: 100%;
 `
 
 export default MobileHomepage

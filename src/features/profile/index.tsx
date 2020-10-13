@@ -1,12 +1,18 @@
 import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
+import { RootState } from 'store/rootReducer'
+import { useSelector } from 'react-redux'
 
 import Logout from 'components/Logout'
 
 const Profile: FunctionComponent = () => {
+	const user = useSelector((state: RootState) => state.user)
+
 	return (
 		<Container>
 			<Logout />
+			{`${user.username} 
+			${user.email}`}
 		</Container>
 	)
 }

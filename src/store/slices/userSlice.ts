@@ -7,7 +7,7 @@ import firebase, { auth, db } from 'utils/firebase'
 import { UserState, User, UserUpdate, UserWithoutId } from 'types'
 
 import { clearGroups, fetchUserGroups } from './groupsSlice'
-import { clearMembers } from './membersSlice'
+import { clearMembers, recieveMember } from './membersSlice'
 
 const initialState: UserState = {
 	username: null,
@@ -54,8 +54,7 @@ export const { recieveUser, userError, clear, updateUser } = user.actions
 export default user.reducer
 
 export const login = (email: string, password: string): AppThunk => async (
-	dispatch,
-	getState
+	dispatch
 ) => {
 	try {
 		const uid = await auth
@@ -72,6 +71,19 @@ export const login = (email: string, password: string): AppThunk => async (
 			.doc(uid)
 			.get()
 			.then(doc => doc.data())) as User
+
+		await recieveMember({
+			...user,
+			uid,
+			actions: {}
+
+		})
+		dispatch(recieveMember({
+			...user,
+			uid,
+			actions: {}
+
+		}))
 
 		dispatch(fetchUserGroups(uid))
 
@@ -109,7 +121,15 @@ export const signup = (
 				uid
 			})
 		)
+		
+		dispatch(recieveMember({
+			...user,
+			uid,
+			actions: {}
+
+		}))
 	} catch (error) {
+		
 		dispatch(userError(error.message))
 	}
 }
