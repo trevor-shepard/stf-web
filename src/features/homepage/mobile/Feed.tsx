@@ -14,7 +14,7 @@ const Feed: FunctionComponent<Props> = ({ groupID }) => {
 	const allMembers = useSelector((state: RootState) => state.members)
 	const groups = useSelector((state: RootState) => state.groups)
 	const group = groups[groupID] as Group
-	
+
 	const actions = Object.keys(allMembers)
 		.reduce((acc: Action[], uid) => {
 			if (!group) return [...acc, ...Object.values(allMembers[uid].actions)]

@@ -4,7 +4,7 @@ import { AppThunk } from '..'
 
 import firebase, { auth, db } from 'utils/firebase'
 
-import { UserState, User, UserUpdate, UserWithoutId } from 'types'
+import { UserState, User, UserUpdate, UserWithoutId, MemberActions } from 'types'
 
 import { clearGroups, fetchUserGroups } from './groupsSlice'
 import { clearMembers, recieveMember } from './membersSlice'
@@ -53,9 +53,10 @@ export const { recieveUser, userError, clear, updateUser } = user.actions
 
 export default user.reducer
 
-export const login = (email: string, password: string): AppThunk => async (
-	dispatch
-) => {
+export const login = (
+	email: string,
+	password: string
+): AppThunk => async dispatch => {
 	try {
 		const uid = await auth
 			.signInWithEmailAndPassword(email, password)
@@ -76,14 +77,14 @@ export const login = (email: string, password: string): AppThunk => async (
 			...user,
 			uid,
 			actions: {}
-
 		})
-		dispatch(recieveMember({
-			...user,
-			uid,
-			actions: {}
-
-		}))
+		dispatch(
+			recieveMember({
+				...user,
+				uid,
+				actions: {}
+			})
+		)
 
 		dispatch(fetchUserGroups(uid))
 
@@ -121,15 +122,15 @@ export const signup = (
 				uid
 			})
 		)
-		
-		dispatch(recieveMember({
-			...user,
-			uid,
-			actions: {}
 
-		}))
+		dispatch(
+			recieveMember({
+				...user,
+				uid,
+				actions: {}
+			})
+		)
 	} catch (error) {
-		
 		dispatch(userError(error.message))
 	}
 }
@@ -153,4 +154,24 @@ export const logout = (): AppThunk => async dispatch => {
 	dispatch(clear())
 	dispatch(clearGroups())
 	dispatch(clearMembers())
+}
+
+export const addUserPhoto = (photo: string): AppThunk => async (dispatch, getState) => {
+	const { user, members } = getState()
+
+	const uid = user.uid as string
+	await db.collection('users').doc(uid).update({
+		photo
+	})
+
+
+	dispatch(updateUser({ photo }))
+
+	dispatch(recieveMember({
+		...user as User,
+		actions: members[uid].actions as MemberActions,
+		photo
+	}))
+
+
 }

@@ -19,7 +19,8 @@ export interface UserWithoutId {
 }
 
 export interface UserUpdate {
-	username: string
+	username?: string
+	photo?: string
 }
 
 export interface Votes {
