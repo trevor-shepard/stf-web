@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import Modal from 'components/Modal'
 import TextInput from 'components/inputs/text'
 import { createGroup } from 'store/slices/groupsSlice'
 

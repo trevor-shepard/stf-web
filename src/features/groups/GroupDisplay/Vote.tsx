@@ -32,15 +32,12 @@ const Vote: FunctionComponent<Props> = ({
 	const [verb, unit] = name.split('$')
 
 	useEffect(() => {
-		if (votes[uid]) setVote(votes[uid])
-	}, [])
-
-	useEffect(() => {
+		if (vote === 0 && votes[uid]) setVote(votes[uid])
 		const avg =
 			Object.values(votes).reduce((acc, curr) => acc + curr) /
 			Object.values(votes).length
 		setCurrAvg(avg)
-	}, [votes])
+	}, [votes, uid, vote])
 
 	const dispatch = useDispatch()
 

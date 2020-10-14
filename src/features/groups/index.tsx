@@ -24,8 +24,8 @@ const MobileGroups: FunctionComponent = () => {
 	useEffect(() => {
 		const firstGroup = Object.values(groups)[0]
 
-		if (firstGroup) setGroupID(firstGroup.id)
-	}, [])
+		if (firstGroup && groupID === '') setGroupID(firstGroup.id)
+	}, [groups, groupID])
 
 	return (
 		<Container>

@@ -24,6 +24,12 @@ body {
 		url(./fonts/Mulish-VariableFont_wght.ttf) format('truetype');
 }
 
+@font-face {
+	font-family: 'Amsi Pro Narw';
+	src: local('Amsi Pro Narw'),
+		url(./fonts/AmsiProNarw-Ultra.otf) format('opentype');
+}
+
 code {
 	font-family: 'Open Sans', source-code-pro, Menlo, Monaco, Consolas,
 		'Courier New', monospace;

@@ -7,8 +7,9 @@ import React, {
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
-import { Group } from 'types'
+import { Group, Member } from 'types'
 import Vote from './Vote'
+import MemberComponent from './Member'
 interface Props {
 	group: Group
 	display: 'fame' | 'shame' | 'members'
@@ -25,32 +26,107 @@ const GroupDisplay: FunctionComponent<Props> = ({
 	const [name, setName] = useState('')
 	const { activities } = group
 
-	let members: (JSX.Element | null)[] = Object.values(group.members).map(id => {
-		const member = allMembers[id]
-		return member ? <li>{member.username}</li> : null
-	})
+	const activityValues: { [name: string]: number } = Object.keys(
+		activities
+	).reduce((acc, name) => {
+		const votes = activities[name]
+
+		const value =
+			Object.values(votes).reduce((sum, curr) => sum + curr) /
+			Object.values(votes).length
+		return {
+			...acc,
+			[name]: value
+		}
+	}, {})
+
+	const memberIDs = group.members as string[]
+
+	let members = memberIDs
+		.reduce((acc: { member: Member; score: number }[], id) => {
+			const member = allMembers[id]
+			const actions = member.actions
+
+			let score = 0
+
+			for (const id of Object.keys(actions)) {
+				const { name, quantity } = actions[id]
+				if (activityValues[name]) {
+					score = score + activityValues[name] * quantity
+				}
+			}
+
+			if (member)
+				return [
+					...acc,
+					{
+						member,
+						score
+					}
+				]
+
+			return acc
+		}, [])
+		.sort((a, b) => b.score - a.score)
+		.map(({ member, score }, i) => (
+			<MemberComponent rank={i + 1} member={member} score={score} />
+		))
 
 	// sort activities
-	let fame: (JSX.Element | Element)[] = []
-	let shame: (JSX.Element | Element)[] = []
+
 	const names = Object.keys(activities) as string[]
+
+	let fameObjs: { verb: string; unit: string; score: number }[] = []
+	let shameObjs: { verb: string; unit: string; score: number }[] = []
 	for (const name of names) {
 		const [verb, unit] = name.split('$')
-		const votes = activities[name]
-		const vote = Object.values(votes).reduce((acc, curr) => acc + curr)
-		const listItem = (
-			<li onClick={() => setName(name)}>
-				<div>
-					{verb.split('_').join(' ')} 1 {unit}
-				</div>
-			</li>
-		)
-		if (vote > 0) {
-			fame = [...fame, listItem]
+		const score = activityValues[name]
+
+		if (score > 0) {
+			fameObjs = [
+				...fameObjs,
+				{
+					verb,
+					unit,
+					score
+				}
+			]
 		} else {
-			shame = [...shame, listItem]
+			shameObjs = [
+				...shameObjs,
+				{
+					verb,
+					unit,
+					score
+				}
+			]
 		}
 	}
+
+	const fame: (JSX.Element | Element)[] = fameObjs
+		.sort((a, b) => a.score - b.score)
+		.map(({ verb, unit, score }) => {
+			return (
+				<Activity onClick={() => setName(name)}>
+					<ActivityDetail>
+						{verb.split('_').join(' ')} 1 {unit}
+					</ActivityDetail>
+					<ActivityDetail>{score}</ActivityDetail>
+				</Activity>
+			)
+		})
+	const shame: (JSX.Element | Element)[] = shameObjs
+		.sort((a, b) => b.score - a.score)
+		.map(({ verb, unit, score }) => {
+			return (
+				<Activity onClick={() => setName(name)}>
+					<ActivityDetail>
+						{verb.split('_').join(' ')} 1 {unit}
+					</ActivityDetail>
+					<ActivityDetail>{score}</ActivityDetail>
+				</Activity>
+			)
+		})
 
 	return (
 		<Container>
@@ -99,6 +175,10 @@ const Container = styled.div`
 const DisplayToggle = styled.div`
 	display: flex;
 	flex-direction: row;
+	width: 100%;
+	justify-content: center;
+	margin-top: 4%;
+	margin-bottom: 4%;
 `
 
 interface ToggleSelectorProps {
@@ -107,8 +187,47 @@ interface ToggleSelectorProps {
 const ToggleSelector = styled.div<ToggleSelectorProps>`
 	border-radius: 6px;
 	height: 32px;
+	border: 0.5px solid #323f4b;
+	box-sizing: border-box;
+	border-radius: 6px;
+	${({ selected }) =>
+		selected ? 'font-weight: bold; background: #2F80ED; color: #ffffff' : null};
+	padding: 6px;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-family: Mulish;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 114%;
+	/* identical to box height, or 16px */
 
-	${({ selected }) => (selected ? 'font-weight: bold' : null)};
+	text-align: center;
+	letter-spacing: 0.2px;
+`
+const Activity = styled.div`
+	background: #c4c4c4 40%;
+	height: 55px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-content: center;
+	padding-left: 10px;
+	padding-right: 30px;
+	margin-bottom: 30px;
+`
+
+const ActivityDetail = styled.div`
+	font-family: Amsi Pro Narw;
+	font-style: normal;
+	font-weight: 800;
+	font-size: 28px;
+	line-height: 120%;
+	display: flex;
+	align-items: center;
+	letter-spacing: 0.177303px;
+
+	color: #262626;
 `
 
 export default GroupDisplay

@@ -11,9 +11,13 @@ const Profile: FunctionComponent = () => {
 	return (
 		<Container>
 			<Logout />
-			{ editPhoto && <AddProfile username={username as string} hideModal={() => setEditPhoto(false)} />}
-		
-
+			{editPhoto && (
+				<AddProfile
+					username={username as string}
+					hideModal={() => setEditPhoto(false)}
+				/>
+			)}
+			<Username>{username}</Username>
 			<ProfileImageContainer onClick={() => setEditPhoto(true)}>
 				{photo ? (
 					<ProfileImage src={photo} />
@@ -22,7 +26,6 @@ const Profile: FunctionComponent = () => {
 				)}
 				<AddPhoto src={addPhoto} />
 			</ProfileImageContainer>
-			<Username>{username}</Username>
 		</Container>
 	)
 }
@@ -32,31 +35,34 @@ const Container = styled.div`
 	overflow: scroll;
 	display: flex;
 	flex-direction: column;
+	padding-top: 10%;
 `
 const ProfileImageContainer = styled.div`
 	position: absolute;
 	margin-top: 10%;
 	width: 100%;
+	overflow: hidden;
+	border-radius: 100px;
 `
 
 const ProfileImage = styled.img`
-	border-radius: 100px;
 	height: 178px;
 	width: 178px;
+	border-radius: 100px;
+	object-fit: cover;
 `
+
 const AddPhoto = styled.img`
 	position: relative;
 	left: 10;
 	right: -20;
 `
 const Username = styled.div`
-	font-family: Muna;
+	font-family: Amsi Pro Narw;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 24px;
 	line-height: 120%;
-	/* or 29px */
-
 	text-align: center;
 	letter-spacing: 0.15px;
 `

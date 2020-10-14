@@ -40,6 +40,8 @@ const Container = styled.div`
 	width: 100%;
 `
 
-const AddIcon = styled.img``
+const AddIcon = styled.img`
+	padding-right: 4%;
+`
 
 export default Screen

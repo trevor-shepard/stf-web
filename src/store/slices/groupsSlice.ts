@@ -7,6 +7,7 @@ import { db } from 'utils/firebase'
 import { GroupsState, Group } from 'types'
 
 import { fetchMember } from './membersSlice'
+import { debug } from 'console'
 
 const initialState: GroupsState = {}
 
@@ -18,6 +19,7 @@ const groups = createSlice({
 			const group = action.payload
 
 			return {
+				...state,
 				[group.id]: group
 			}
 		},
@@ -52,6 +54,7 @@ export const fetchUserGroups = (uid: string): AppThunk => async dispatch => {
 
 				return values
 			})
+		debugger
 
 		for (const group of Object.values(groups)) {
 			const { members } = group

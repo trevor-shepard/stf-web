@@ -4,7 +4,13 @@ import { AppThunk } from '..'
 
 import firebase, { auth, db } from 'utils/firebase'
 
-import { UserState, User, UserUpdate, UserWithoutId, MemberActions } from 'types'
+import {
+	UserState,
+	User,
+	UserUpdate,
+	UserWithoutId,
+	MemberActions
+} from 'types'
 
 import { clearGroups, fetchUserGroups } from './groupsSlice'
 import { clearMembers, recieveMember } from './membersSlice'
@@ -156,22 +162,27 @@ export const logout = (): AppThunk => async dispatch => {
 	dispatch(clearMembers())
 }
 
-export const addUserPhoto = (photo: string): AppThunk => async (dispatch, getState) => {
+export const addUserPhoto = (photo: string): AppThunk => async (
+	dispatch,
+	getState
+) => {
 	const { user, members } = getState()
 
 	const uid = user.uid as string
-	await db.collection('users').doc(uid).update({
-		photo
-	})
-
+	await db
+		.collection('users')
+		.doc(uid)
+		.update({
+			photo
+		})
 
 	dispatch(updateUser({ photo }))
 
-	dispatch(recieveMember({
-		...user as User,
-		actions: members[uid].actions as MemberActions,
-		photo
-	}))
-
-
+	dispatch(
+		recieveMember({
+			...(user as User),
+			actions: members[uid].actions as MemberActions,
+			photo
+		})
+	)
 }
