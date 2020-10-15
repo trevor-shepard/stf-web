@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { Link, useLocation } from 'react-router-dom'
 import { Home, Profile, Group } from 'assets/icons'
 
+
 const MobileNav: FunctionComponent = () => {
 	const { pathname } = useLocation()
 

@@ -69,25 +69,23 @@ const GroupDisplay: FunctionComponent<Props> = ({
 		}, [])
 		.sort((a, b) => b.score - a.score)
 		.map(({ member, score }, i) => (
-			<MemberComponent rank={i + 1} member={member} score={score} />
+			<MemberComponent  key={`${i}-member-item`} rank={i + 1} member={member} score={score} />
 		))
 
 	// sort activities
 
 	const names = Object.keys(activities) as string[]
 
-	let fameObjs: { verb: string; unit: string; score: number }[] = []
-	let shameObjs: { verb: string; unit: string; score: number }[] = []
+	let fameObjs: { name: string; score: number }[] = []
+	let shameObjs: { name: string; score: number }[] = []
 	for (const name of names) {
-		const [verb, unit] = name.split('$')
 		const score = activityValues[name]
 
 		if (score > 0) {
 			fameObjs = [
 				...fameObjs,
 				{
-					verb,
-					unit,
+					name,
 					score
 				}
 			]
@@ -95,8 +93,7 @@ const GroupDisplay: FunctionComponent<Props> = ({
 			shameObjs = [
 				...shameObjs,
 				{
-					verb,
-					unit,
+					name,
 					score
 				}
 			]
@@ -105,9 +102,10 @@ const GroupDisplay: FunctionComponent<Props> = ({
 
 	const fame: (JSX.Element | Element)[] = fameObjs
 		.sort((a, b) => a.score - b.score)
-		.map(({ verb, unit, score }) => {
+		.map(({ name, score }, i) => {
+			const [verb, unit] = name.split('$')
 			return (
-				<Activity onClick={() => setName(name)}>
+				<Activity  key={`${i}-activity-fame-item`} onClick={() => setName(name)}>
 					<ActivityDetail>
 						{verb.split('_').join(' ')} 1 {unit}
 					</ActivityDetail>
@@ -115,11 +113,12 @@ const GroupDisplay: FunctionComponent<Props> = ({
 				</Activity>
 			)
 		})
-	const shame: (JSX.Element | Element)[] = shameObjs
-		.sort((a, b) => b.score - a.score)
-		.map(({ verb, unit, score }) => {
+	const shame: (JSX.Element | Element)[] = fameObjs
+		.sort((a, b) => a.score - b.score)
+		.map(({ name, score }, i) => {
+			const [verb, unit] = name.split('$')
 			return (
-				<Activity onClick={() => setName(name)}>
+				<Activity  key={`${i}-activity-fame-item`} onClick={() => setName(name)}>
 					<ActivityDetail>
 						{verb.split('_').join(' ')} 1 {unit}
 					</ActivityDetail>

@@ -34,7 +34,7 @@ const Container = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	height: 100px;
+	height: 60px;
 	border-bottom: 0.5px solid #7b8794;
 	background: #ffffff;
 	width: 100%;

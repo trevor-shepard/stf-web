@@ -47,7 +47,7 @@ const Vote: FunctionComponent<Props> = ({
 		setLoading(false)
 	}
 
-	const MemberVotes = Object.keys(votes).map(uid => {
+	const MemberVotes = Object.keys(votes).map((uid, i) => {
 		if (uid === 'example') {
 			return <div>Example - {votes[uid]}</div>
 		}
@@ -57,7 +57,7 @@ const Vote: FunctionComponent<Props> = ({
 		const memberVote = votes[uid]
 
 		return (
-			<div>
+			<div  key={`${i}-votes-item`}>
 				{username} - {memberVote}
 			</div>
 		)

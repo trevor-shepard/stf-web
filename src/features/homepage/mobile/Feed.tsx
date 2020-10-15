@@ -23,10 +23,11 @@ const Feed: FunctionComponent<Props> = ({ groupID }) => {
 			return acc
 		}, [])
 		.sort((a, b) => b.date - a.date)
-		.map(action => (
+		.map((action, i) => (
 			<FeedListItem
 				action={action}
 				username={allMembers[action.uid].username}
+				key={`${i}-feed-list-item`}
 			/>
 		))
 

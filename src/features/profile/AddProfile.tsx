@@ -21,7 +21,7 @@ const AddActivityModal: FunctionComponent<Props> = ({
 		const files = target.files
 		if (files === null) return setError('no image found')
 		const file = files[0]
-		const image = URL.createObjectURL(file);
+		const image = URL.createObjectURL(file)
 		setImageAsFile(file)
 		setFileAsImage(image)
 	}
@@ -68,16 +68,14 @@ const AddActivityModal: FunctionComponent<Props> = ({
 		<Modal hideModal={hideModal}>
 			<Title>upload a profile picture</Title>
 			{error !== '' && error}
-			{fileAsImage && 
-			<ProfileImageContainer >
-			
-				<ProfileImage src={fileAsImage} />
-			
-			
-		</ProfileImageContainer>}
+			{fileAsImage && (
+				<ProfileImageContainer>
+					<ProfileImage src={fileAsImage} />
+				</ProfileImageContainer>
+			)}
 			<form>
 				<input type="file" onChange={handleImageAsFile} />
-				<SubmitButton onClick={handleFireBaseUpload} >submit</SubmitButton>
+				<SubmitButton onClick={handleFireBaseUpload}>submit</SubmitButton>
 			</form>
 		</Modal>
 	)
@@ -100,7 +98,6 @@ const SubmitButton = styled.button`
 `
 
 const ProfileImageContainer = styled.div`
-	
 	margin-top: 10%;
 	width: 100%;
 	overflow: hidden;

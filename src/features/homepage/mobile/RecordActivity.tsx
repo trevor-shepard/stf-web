@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
@@ -9,18 +9,20 @@ import TextInput from 'components/inputs/text'
 import { recordActivity } from 'store/slices/membersSlice'
 
 interface Props {
-	hideModal: () => void
+	hideModal: () => void,
+	name?: string
 }
 
-const RecordActivity: FunctionComponent<Props> = ({ hideModal }) => {
+const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 	const [loading, setLoading] = useState(false)
 	const groups = useSelector((state: RootState) => state.groups)
-	const [activity, setActivity] = useState('')
+	const [activity, setActivity] = useState(name ? name : '')
 	const [quantity, setQuantity] = useState(1)
 	const [date, setDate] = useState(moment().format('YYYY/M/D'))
 	const [time, setTime] = useState(moment().format('HH:mm'))
 	const [verb, unit] = activity.split('$')
 	const dispatch = useDispatch()
+
 
 	// get all verbs from all groups
 	const activities = Object.keys(
@@ -29,10 +31,10 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal }) => {
 
 			return { ...acc, ...activities }
 		}, {})
-	).map(_activity => {
+	).map((_activity, i) => {
 		const [verb, unit] = _activity.split('$')
 		return (
-			<div onClick={() => setActivity(_activity)}>
+			<div  key={`${i}-activity-item`} onClick={() => setActivity(_activity)}>
 				{verb.split('_').join(' ')} -- {unit}
 			</div>
 		)

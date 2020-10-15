@@ -5,13 +5,16 @@ import { RootState } from 'store/rootReducer'
 import Header from 'components/Header'
 import RecordActivity from './RecordActivity'
 import Feed from './Feed'
+import ActivityCarousel from './ActivityCarousel'
 const MobileHomepage: FunctionComponent = () => {
 	const groups = useSelector((state: RootState) => state.groups)
 	// const members = useSelector((state: RootState) => state.members)
 
 	const [groupID, setGroupID] = useState('')
 	const [showRecord, setShowRecord] = useState(false)
-
+	const [activityName, setActivityName] = useState('')	
+	
+	
 	// const groupNames = Object.values(groups).map(group => group.name)
 
 	return (
@@ -22,8 +25,8 @@ const MobileHomepage: FunctionComponent = () => {
 				selectGroup={setGroupID}
 				handleAdd={() => setShowRecord(true)}
 			/>
-			{showRecord && <RecordActivity hideModal={() => setShowRecord(false)} />}
-
+			{showRecord && <RecordActivity name={activityName}  hideModal={() => setShowRecord(false)} />}
+			<ActivityCarousel showRecord={setShowRecord}   setActivity={setActivityName} />
 			<Feed groupID={groupID} />
 		</Container>
 	)
