@@ -69,7 +69,12 @@ const GroupDisplay: FunctionComponent<Props> = ({
 		}, [])
 		.sort((a, b) => b.score - a.score)
 		.map(({ member, score }, i) => (
-			<MemberComponent  key={`${i}-member-item`} rank={i + 1} member={member} score={score} />
+			<MemberComponent
+				key={`${i}-member-item`}
+				rank={i + 1}
+				member={member}
+				score={score}
+			/>
 		))
 
 	// sort activities
@@ -105,7 +110,7 @@ const GroupDisplay: FunctionComponent<Props> = ({
 		.map(({ name, score }, i) => {
 			const [verb, unit] = name.split('$')
 			return (
-				<Activity  key={`${i}-activity-fame-item`} onClick={() => setName(name)}>
+				<Activity key={`${i}-activity-fame-item`} onClick={() => setName(name)}>
 					<ActivityDetail>
 						{verb.split('_').join(' ')} 1 {unit}
 					</ActivityDetail>
@@ -118,7 +123,7 @@ const GroupDisplay: FunctionComponent<Props> = ({
 		.map(({ name, score }, i) => {
 			const [verb, unit] = name.split('$')
 			return (
-				<Activity  key={`${i}-activity-fame-item`} onClick={() => setName(name)}>
+				<Activity key={`${i}-activity-fame-item`} onClick={() => setName(name)}>
 					<ActivityDetail>
 						{verb.split('_').join(' ')} 1 {unit}
 					</ActivityDetail>

@@ -12,9 +12,8 @@ const MobileHomepage: FunctionComponent = () => {
 
 	const [groupID, setGroupID] = useState('')
 	const [showRecord, setShowRecord] = useState(false)
-	const [activityName, setActivityName] = useState('')	
-	
-	
+	const [activityName, setActivityName] = useState('')
+
 	// const groupNames = Object.values(groups).map(group => group.name)
 
 	return (
@@ -25,9 +24,19 @@ const MobileHomepage: FunctionComponent = () => {
 				selectGroup={setGroupID}
 				handleAdd={() => setShowRecord(true)}
 			/>
-			{showRecord && <RecordActivity name={activityName}  hideModal={() => setShowRecord(false)} />}
-			<ActivityCarousel showRecord={setShowRecord}   setActivity={setActivityName} />
-			<Feed groupID={groupID} />
+			{showRecord && (
+				<RecordActivity
+					name={activityName}
+					hideModal={() => setShowRecord(false)}
+				/>
+			)}
+			<ActivityCarousel
+				showRecord={setShowRecord}
+				setActivity={setActivityName}
+			/>
+			<OverflowContainer>
+				<Feed groupID={groupID} />
+			</OverflowContainer>
 		</Container>
 	)
 }
@@ -38,6 +47,11 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+`
+
+const OverflowContainer = styled.div`
+	overflow: scroll;
+	height: 100%;
 `
 
 export default MobileHomepage

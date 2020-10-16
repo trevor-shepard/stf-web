@@ -9,7 +9,7 @@ import TextInput from 'components/inputs/text'
 import { recordActivity } from 'store/slices/membersSlice'
 
 interface Props {
-	hideModal: () => void,
+	hideModal: () => void
 	name?: string
 }
 
@@ -23,7 +23,6 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 	const [verb, unit] = activity.split('$')
 	const dispatch = useDispatch()
 
-
 	// get all verbs from all groups
 	const activities = Object.keys(
 		Object.values(groups).reduce((acc, group) => {
@@ -34,7 +33,7 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 	).map((_activity, i) => {
 		const [verb, unit] = _activity.split('$')
 		return (
-			<div  key={`${i}-activity-item`} onClick={() => setActivity(_activity)}>
+			<div key={`${i}-activity-item`} onClick={() => setActivity(_activity)}>
 				{verb.split('_').join(' ')} -- {unit}
 			</div>
 		)
@@ -64,13 +63,16 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 			) : (
 				<>
 					<Title>
-						{verb.split('_').join(' ')} 1 {unit} on {date} at {time}
+						{verb.split('_').join(' ')} 1 {unit}
 					</Title>
+					<SubTitle>
+						{date} at {time}
+					</SubTitle>
 					<TextInput
 						handleInput={e => setQuantity(parseInt(e.target.value))}
 						value={quantity.toString()}
 						type={'number'}
-						label={'your Vote'}
+						label={'amount'}
 					/>
 
 					<TextInput
@@ -79,7 +81,7 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 						}}
 						value={date.toString()}
 						type={'date'}
-						label={'date completed'}
+						label={'date'}
 					/>
 					<TextInput
 						handleInput={e => {
@@ -87,17 +89,29 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 						}}
 						value={time.toString()}
 						type={'time'}
-						label={'time completed'}
+						label={'time'}
 					/>
 
-					<SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+					<SubmitButton onClick={handleSubmit}>submit</SubmitButton>
 				</>
 			)}
 		</Modal>
 	)
 }
 
-const Title = styled.div``
+const Title = styled.div`
+	font-family: Amsi Pro Narw;
+	font-style: normal;
+	font-weight: 800;
+	font-size: 22px;
+`
+
+const SubTitle = styled.div`
+	font-family: Mulish;
+	font-style: normal;
+	font-weight: 200;
+	font-size: 14px;
+`
 
 const SubmitButton = styled.button`
 	font-family: Poppins;

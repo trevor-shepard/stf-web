@@ -57,7 +57,7 @@ const Vote: FunctionComponent<Props> = ({
 		const memberVote = votes[uid]
 
 		return (
-			<div  key={`${i}-votes-item`}>
+			<div key={`${i}-votes-item`}>
 				{username} - {memberVote}
 			</div>
 		)

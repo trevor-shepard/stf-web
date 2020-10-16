@@ -18,7 +18,7 @@ const Screen: FunctionComponent<Props> = ({
 }) => {
 	return (
 		<Container>
-			<div />
+			<SpaceHolder />
 			<GroupSelector
 				groupID={groupID}
 				selectGroup={selectGroup}
@@ -42,6 +42,11 @@ const Container = styled.div`
 
 const AddIcon = styled.img`
 	padding-right: 4%;
+`
+
+const SpaceHolder = styled.div`
+	width: 18px;
+	padding-left: 4%;
 `
 
 export default Screen
