@@ -118,7 +118,7 @@ const GroupDisplay: FunctionComponent<Props> = ({
 				</Activity>
 			)
 		})
-	const shame: (JSX.Element | Element)[] = fameObjs
+	const shame: (JSX.Element | Element)[] = shameObjs
 		.sort((a, b) => a.score - b.score)
 		.map(({ name, score }, i) => {
 			const [verb, unit] = name.split('$')
