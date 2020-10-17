@@ -39,6 +39,7 @@ const Navbar = styled.div`
 	bottom: 10px;
 	opacity: 1;
 	background-color: #ffff;
+	z-index: 10;
 `
 interface TabIconProps {
 	current: string

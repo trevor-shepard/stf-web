@@ -20,4 +20,28 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth()
 export const db = firebase.firestore()
 export const storage = firebase.storage()
+
+export const handleFireBaseUpload = async (path: string, photo: File) => {
+	
+	console.log('start of upload')
+	if (photo === null)
+		throw Error(`not an image, the image file is a ${typeof photo}`)
+	const downloadURL = await storage
+		.ref(path)
+		.put(photo)
+		.then(	async () => {
+			// gets the functions from storage refences the image storage in firebase by the children
+			// gets the download url then sets the image from firebase as the value for the imgUrl key:
+			return await storage
+				.ref(path)
+				.getDownloadURL() as string
+
+			
+		}).catch(error => {
+			const message = error.message
+			console.log(message)
+		})
+
+	return downloadURL 
+}
 export default firebase

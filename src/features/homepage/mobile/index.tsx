@@ -8,13 +8,10 @@ import Feed from './Feed'
 import ActivityCarousel from './ActivityCarousel'
 const MobileHomepage: FunctionComponent = () => {
 	const groups = useSelector((state: RootState) => state.groups)
-	// const members = useSelector((state: RootState) => state.members)
 
 	const [groupID, setGroupID] = useState('')
 	const [showRecord, setShowRecord] = useState(false)
 	const [activityName, setActivityName] = useState('')
-
-	// const groupNames = Object.values(groups).map(group => group.name)
 
 	return (
 		<Container>

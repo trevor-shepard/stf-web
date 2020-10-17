@@ -34,7 +34,7 @@ const Modal = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 298px;
-	height: 340px;
+	min-height: 340px;
 	background: #ffffff;
 	border: 1px solid #000000;
 	box-sizing: border-box;

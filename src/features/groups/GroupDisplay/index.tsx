@@ -162,9 +162,11 @@ const GroupDisplay: FunctionComponent<Props> = ({
 					shame
 				</ToggleSelector>
 			</DisplayToggle>
-			{display === 'fame' && fame}
-			{display === 'shame' && shame}
-			{display === 'members' && members}
+			<OverflowContainer>
+				{display === 'fame' && fame}
+				{display === 'shame' && shame}
+				{display === 'members' && members}
+			</OverflowContainer>
 		</Container>
 	)
 }
@@ -199,13 +201,13 @@ const ToggleSelector = styled.div<ToggleSelectorProps>`
 	padding: 6px;
 	padding-left: 10px;
 	padding-right: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
 	font-family: Mulish;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 14px;
 	line-height: 114%;
-	/* identical to box height, or 16px */
-
 	text-align: center;
 	letter-spacing: 0.2px;
 `
@@ -232,6 +234,12 @@ const ActivityDetail = styled.div`
 	letter-spacing: 0.177303px;
 
 	color: #262626;
+`
+
+const OverflowContainer = styled.div`
+	padding-top: 10px;
+	overflow: scroll;
+	height: 100%;
 `
 
 export default GroupDisplay

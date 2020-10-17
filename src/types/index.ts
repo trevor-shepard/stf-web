@@ -48,7 +48,7 @@ export interface Action {
 	date: number
 	name: string
 	quantity: number
-	photo?: string
+	photo?: string | null
 	uid: string
 	id: string
 }

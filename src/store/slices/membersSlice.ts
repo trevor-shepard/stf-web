@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppThunk } from '..'
 
-import { db } from 'utils/firebase'
+import { db, handleFireBaseUpload } from 'utils/firebase'
 
 import { User, Member, MembersState, Action, MemberActions } from 'types'
 
@@ -127,7 +127,8 @@ export const fetchMembersActions = (
 export const recordActivity = (
 	date: number,
 	name: string,
-	quantity: number
+	quantity: number,
+	photo: File | null
 ): AppThunk => async (dispatch, getState) => {
 	const {
 		user: { uid }
@@ -135,12 +136,17 @@ export const recordActivity = (
 
 	const ref = await db.collection('actions').doc()
 
+	
+	const downloadURL = photo ? await handleFireBaseUpload(`/images/${uid}/actions/${ref.id}/${photo.name}`, photo) : null
+
+
 	const action: Action = {
 		uid: uid as string,
 		name,
 		quantity,
 		date,
-		id: ref.id
+		id: ref.id,
+		photo: downloadURL
 	}
 
 	await ref.set(action)

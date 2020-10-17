@@ -21,21 +21,21 @@ const Screen: FunctionComponent<HeaderProps> = ({
 }) => {
 	const [drop, setDrop] = useState(false)
 	const listValues = Object.values(groups).map(group => (
-		<GroupListItem onClick={()=> {
-			
-			selectGroup(group.id)
-			setDrop(false)
-		
-		} }>{group.name}</GroupListItem>
+		<GroupListItem
+			onClick={() => {
+				selectGroup(group.id)
+				setDrop(false)
+			}}
+		>
+			{group.name}
+		</GroupListItem>
 	))
 
 	const group = groups[groupID]
 
 	return (
 		<Container>
-			<GroupName>
-				{groupID ? group.name : 'AllGroups'}
-			</GroupName>
+			<GroupName>{groupID ? group.name : 'AllGroups'}</GroupName>
 			{drop && <GroupList>{listValues}</GroupList>}
 			<DropDown src={dropDown} onClick={() => setDrop(!drop)} />
 		</Container>
@@ -55,7 +55,6 @@ const GroupName = styled.div`
 	font-weight: bold;
 	font-size: 20px;
 	line-height: 120%;
-	
 `
 
 const DropDown = styled.img`
@@ -69,13 +68,12 @@ const GroupList = styled.div`
 	z-index: 4;
 	position: absolute;
 	right: -75px;
-    bottom: -25px;
+	bottom: -25px;
 	background-color: #ffffff;
 	z-index: 10;
 	border: 1px solid black;
 	border-radius: 4px;
 	padding: 10px;
-
 `
 
 const GroupListItem = styled.div`

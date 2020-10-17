@@ -25,11 +25,11 @@ const ActivityCarousel: FunctionComponent<Props> = ({
 	const groups = useSelector((state: RootState) => state.groups)
 	const members = useSelector((state: RootState) => state.members)
 	const { uid } = useSelector((state: RootState) => state.user)
-	const memberActivities = Object.values(members[uid as string].actions)
 
 	const [frequency, setFrequency] = useState<{ [name: string]: number }>({})
 
 	useEffect(() => {
+		const memberActivities = Object.values(members[uid as string].actions)
 		const freq: { [name: string]: number } = {}
 
 		for (const { name } of memberActivities) {
@@ -41,7 +41,7 @@ const ActivityCarousel: FunctionComponent<Props> = ({
 		}
 
 		setFrequency(freq)
-	}, [])
+	}, [members, uid])
 	const activities = Object.keys(
 		Object.values(groups).reduce((acc, group) => {
 			const { activities } = group

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent, useState, FormEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
@@ -20,6 +20,21 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 	const [quantity, setQuantity] = useState(1)
 	const [date, setDate] = useState(moment().format('YYYY/M/D'))
 	const [time, setTime] = useState(moment().format('HH:mm'))
+
+	const [imageAsFile, setImageAsFile] = useState<null | File>(null)
+	const [fileAsImage, setFileAsImage] = useState<null | string>(null)
+	const [error, setError] = useState('')
+
+	const handleImageAsFile = (event: FormEvent) => {
+		const target = event.target as HTMLInputElement
+		const files = target.files
+		if (files === null) return setError('no image found')
+		const file = files[0]
+		const image = URL.createObjectURL(file)
+		setImageAsFile(file)
+		setFileAsImage(image)
+	}
+
 	const [verb, unit] = activity.split('$')
 	const dispatch = useDispatch()
 
@@ -43,7 +58,7 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 		try {
 			setLoading(true)
 			const dateTime = parseInt(moment(`${date} ${time}`).format('X'))
-			await dispatch(recordActivity(dateTime, activity, quantity))
+			await dispatch(recordActivity(dateTime, activity, quantity, imageAsFile))
 
 			hideModal()
 		} catch (error) {
@@ -63,11 +78,21 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 			) : (
 				<>
 					<Title>
-						{verb.split('_').join(' ')} 1 {unit}
+						{verb.split('_').join(' ')} {unit}
 					</Title>
 					<SubTitle>
 						{date} at {time}
 					</SubTitle>
+					{fileAsImage && (
+						<ImgContainer>
+							<Image src={fileAsImage} />
+						</ImgContainer>
+					)}
+
+					
+						<input type="file" onChange={handleImageAsFile} />
+
+		
 					<TextInput
 						handleInput={e => setQuantity(parseInt(e.target.value))}
 						value={quantity.toString()}
@@ -125,6 +150,21 @@ const SubmitButton = styled.button`
 	padding: 11px;
 	margin-bottom: 22px;
 	text-transform: capitalize;
+`
+
+const ImgContainer = styled.div`
+	
+	margin-top: 10%;
+	width: 100%;
+	overflow: hidden;
+	border-radius: 100px;
+`
+
+const Image = styled.img`
+	height: 178px;
+	width: 178px;
+	border-radius: 100px;
+	object-fit: cover;
 `
 
 export default RecordActivity
