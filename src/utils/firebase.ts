@@ -40,4 +40,7 @@ export const handleFireBaseUpload = async (path: string, photo: File) => {
 
 	return downloadURL
 }
+
+
+
 export default firebase

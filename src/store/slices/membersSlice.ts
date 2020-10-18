@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit'
 import { AppThunk } from '..'
 
 import { db, handleFireBaseUpload } from 'utils/firebase'
@@ -155,4 +155,23 @@ export const recordActivity = (
 	await ref.set(action)
 
 	dispatch(recieveAction(action))
+}
+
+
+export const subscribeToMember = (dispatch: Dispatch, uid: string  ) => {
+	const unsubscribe = db
+		.collection('actions')
+		.where('uid', '==', uid)
+		.onSnapshot(querySnapshot => {
+			if (querySnapshot.docs.length > 0) {
+				const values: { [id: string]: Action } = {}
+				querySnapshot.forEach(doc => {
+					const action = doc.data() as Action
+					values[action.id] = action
+				})
+				dispatch(recieveMemberActions(values))
+			}
+		})
+
+	return unsubscribe
 }

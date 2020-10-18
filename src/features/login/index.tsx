@@ -21,6 +21,7 @@ const Login: FunctionComponent = () => {
 			<Input
 				placeholder={'Email'}
 				value={email}
+				type={'email'} 
 				onChange={e => setEmail(e.target.value)}
 			/>
 

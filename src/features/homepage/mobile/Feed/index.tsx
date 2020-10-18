@@ -1,17 +1,20 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import { Group, Action } from 'types'
 import FeedListItem from './FeedListItem'
+import { useDispatch } from 'react-redux'
+import { subscribeToMember } from 'store/slices/membersSlice'
 
 interface Props {
 	groupID: string
 }
 
 const Feed: FunctionComponent<Props> = ({ groupID }) => {
+	const dispatch = useDispatch()
 	const allMembers = useSelector((state: RootState) => state.members)
+	const allActions: Action[] = Object.values(allMembers).reduce((acc: Action[], curr) => [...acc, ...Object.values(curr.actions)], [])
 	const groups = useSelector((state: RootState) => state.groups)
 	const group = groups[groupID] as Group
 	const [actionValues, setActionValues] = useState<{
@@ -19,7 +22,7 @@ const Feed: FunctionComponent<Props> = ({ groupID }) => {
 			[groupID: string]: number
 		}
 	}>({})
-
+	
 	useEffect(() => {
 		const actionGroupValues: {
 			[name: string]: {
@@ -45,6 +48,20 @@ const Feed: FunctionComponent<Props> = ({ groupID }) => {
 		}
 		setActionValues(actionGroupValues)
 	}, [groups])
+
+
+	useEffect(() => {
+		const unsubscribes: (()=> void)[] = []
+		for (const uid of Object.keys(allMembers)) {
+			unsubscribes.push(subscribeToMember(dispatch, uid))
+		}
+
+		return () => {
+			for (const unsubscribe of unsubscribes) {
+				unsubscribe()
+			}
+		}
+	}, [dispatch, allMembers])
 
 	const actions = Object.keys(allMembers)
 		.reduce((acc: Action[], uid) => {
