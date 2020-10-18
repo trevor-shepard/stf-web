@@ -136,9 +136,12 @@ export const recordActivity = (
 
 	const ref = await db.collection('actions').doc()
 
-	
-	const downloadURL = photo ? await handleFireBaseUpload(`/images/${uid}/actions/${ref.id}/${photo.name}`, photo) : null
-
+	const downloadURL = photo
+		? await handleFireBaseUpload(
+				`/images/${uid}/actions/${ref.id}/${photo.name}`,
+				photo
+		  )
+		: null
 
 	const action: Action = {
 		uid: uid as string,

@@ -80,6 +80,8 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 					<Title>
 						{verb.split('_').join(' ')} {unit}
 					</Title>
+					{error && <Error>{error}</Error>}
+					
 					<SubTitle>
 						{date} at {time}
 					</SubTitle>
@@ -89,10 +91,8 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 						</ImgContainer>
 					)}
 
-					
-						<input type="file" onChange={handleImageAsFile} />
+					<input type="file" onChange={handleImageAsFile} />
 
-		
 					<TextInput
 						handleInput={e => setQuantity(parseInt(e.target.value))}
 						value={quantity.toString()}
@@ -102,15 +102,36 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 
 					<TextInput
 						handleInput={e => {
-							setDate(e.target.value)
+
+							const date = e.target.value
+							const future = moment(date).isAfter()
+							
+							if (future) {
+								setError('date cannot be in the future')
+							} else {
+								setDate(e.target.value)
+							}
+
+							
 						}}
 						value={date.toString()}
 						type={'date'}
 						label={'date'}
+
 					/>
 					<TextInput
 						handleInput={e => {
-							setTime(e.target.value)
+							const momentDate = moment(e.target.value).set('date', moment(date).date()).set('month', moment(date).month()).set('year', moment(date).year())
+							
+							const future = momentDate.isAfter()
+							
+							if (future) {
+								setError('date cannot be in the future')
+
+							} else {
+								setTime(e.target.value)
+							}
+							
 						}}
 						value={time.toString()}
 						type={'time'}
@@ -153,7 +174,6 @@ const SubmitButton = styled.button`
 `
 
 const ImgContainer = styled.div`
-	
 	margin-top: 10%;
 	width: 100%;
 	overflow: hidden;
@@ -165,6 +185,19 @@ const Image = styled.img`
 	width: 178px;
 	border-radius: 100px;
 	object-fit: cover;
+`
+
+const Error = styled.div`
+	border-radius: 2px;
+	background: #cc3b3b
+		url(//assets.squarespace.com/universal/images-v6/standard/icon_close_7_light.png)
+		no-repeat 9px 50%;
+	color: #fff;
+	display: inline-block;
+	font-size: 13px;
+	line-height: 23px;
+	margin: 12px 0;
+	padding: 5px 15px 3px 25px;
 `
 
 export default RecordActivity

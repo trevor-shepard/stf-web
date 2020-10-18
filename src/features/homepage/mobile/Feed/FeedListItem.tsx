@@ -36,12 +36,26 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 
 	const fame = score > 0
 
+	const momentDate = moment(date * 1000)
+
+	const today = moment().isSame(momentDate, 'day')
+
+	const yesterday = moment()
+		.subtract(1, 'days')
+		.isSame(momentDate, 'day')
+
 	return (
 		<FeedContainer>
 			<Placeholder fame={fame}>.</Placeholder>
 			<ActivityBox fame={fame}>
 				<Title>{verb}</Title>
-				<SubTitle>{moment(date).format('YYYY/M/D HH:mm')}</SubTitle>
+				<SubTitle>
+					{today
+						? `today at ${momentDate.format('HH:mm A')}`
+						: yesterday
+						? `yesterday at ${momentDate.format('HH:mm A')}`
+						: `${momentDate.format('YYYY/M/D')} at ${momentDate.format('HH:mm A')}`}
+				</SubTitle>
 			</ActivityBox>
 			<ScoreBox fame={fame}>
 				<ScoreTitle>{score}</ScoreTitle>
