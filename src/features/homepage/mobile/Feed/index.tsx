@@ -14,7 +14,6 @@ interface Props {
 const Feed: FunctionComponent<Props> = ({ groupID }) => {
 	const dispatch = useDispatch()
 	const allMembers = useSelector((state: RootState) => state.members)
-	const allActions: Action[] = Object.values(allMembers).reduce((acc: Action[], curr) => [...acc, ...Object.values(curr.actions)], [])
 	const groups = useSelector((state: RootState) => state.groups)
 	const group = groups[groupID] as Group
 	const [actionValues, setActionValues] = useState<{

@@ -39,7 +39,7 @@ const MobileGroups: FunctionComponent = () => {
 				</Modal>
 			)}
 			{modal && (display === 'shame' || display === 'fame') && (
-				<AddActivity groupID={groupID} hideModal={() => setModal(false)} />
+				<AddActivity display={display} groupID={groupID} hideModal={() => setModal(false)} />
 			)}
 			<Header
 				groupID={groupID}

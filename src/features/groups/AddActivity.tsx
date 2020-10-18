@@ -8,13 +8,16 @@ import { addActivity } from 'store/slices/groupsSlice'
 interface Props {
 	hideModal: () => void
 	groupID: string
+	display: 'fame' | 'shame' | 'members'
 }
 
-const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
+const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID , display}) => {
 	const [name, setName] = useState('')
 	const [unit, setUnit] = useState('')
 	const [vote, setVote] = useState(0)
 	const [error, setError] = useState('')
+
+	const isShame = display === 'shame'
 
 	const dispatch = useDispatch()
 
@@ -27,7 +30,7 @@ const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
 			const activity = `${name.split(' ').join('_')}$${unit
 				.split(' ')
 				.join('_')}`.toLocaleLowerCase()
-			await dispatch(addActivity(groupID, activity, vote))
+			await dispatch(addActivity(groupID, activity, isShame ? vote * -1 : vote))
 			hideModal()
 		}
 	}
@@ -47,8 +50,8 @@ const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
 				label={'action unit'}
 			/>
 			<TextInput
-				handleInput={e => setVote(parseInt(e.target.value))}
-				value={vote.toString()}
+				handleInput={e => setVote(Math.abs(parseInt(e.target.value)))}
+				value={ isShame ? (vote * -1).toString() : (vote * -1).toString()}
 				type={'number'}
 				label={'Your Vote'}
 			/>

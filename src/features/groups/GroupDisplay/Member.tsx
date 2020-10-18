@@ -97,7 +97,6 @@ const Rank = styled.div`
 	display: flex;
 	align-items: center;
 	letter-spacing: 0.177303px;
-
 	color: #262626;
 `
 
@@ -113,6 +112,7 @@ const Score = styled.div`
 	align-items: center;
 	text-align: right;
 	letter-spacing: 0.177303px;
+	padding-top: 8px;
 `
 
 export default MobileGroups
