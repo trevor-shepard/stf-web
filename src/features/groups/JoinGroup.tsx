@@ -1,16 +1,16 @@
 import React, { FunctionComponent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { useHistory } from 'react-router-dom'
 import TextInput from 'components/inputs/text'
 import { joinGroup } from 'store/slices/groupsSlice'
 
 interface Props {
 	toggleModal: () => void
+	hideModal: () => void
+	
 }
 
-const JoinGroup: FunctionComponent<Props> = ({ toggleModal }) => {
-	const history = useHistory()
+const JoinGroup: FunctionComponent<Props> = ({ toggleModal, hideModal }) => {
 	const [code, setCode] = useState('')
 	const [error, setError] = useState('')
 	const [loading, setLoading] = useState(false)
@@ -24,8 +24,7 @@ const JoinGroup: FunctionComponent<Props> = ({ toggleModal }) => {
 			try {
 				setLoading(true)
 				await dispatch(joinGroup(code))
-				// change this
-				history.push('/')
+				hideModal()
 			} catch (error) {
 				setError('something went wrong, please check group code')
 				setLoading(false)

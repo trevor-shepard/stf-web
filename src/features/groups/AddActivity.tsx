@@ -11,7 +11,11 @@ interface Props {
 	display: 'fame' | 'shame' | 'members'
 }
 
-const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID , display}) => {
+const AddActivityModal: FunctionComponent<Props> = ({
+	hideModal,
+	groupID,
+	display
+}) => {
 	const [name, setName] = useState('')
 	const [unit, setUnit] = useState('')
 	const [vote, setVote] = useState(0)
@@ -51,7 +55,7 @@ const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID , displ
 			/>
 			<TextInput
 				handleInput={e => setVote(Math.abs(parseInt(e.target.value)))}
-				value={ isShame ? (vote * -1).toString() : (vote * -1).toString()}
+				value={isShame ? (vote * -1).toString() : (vote * -1).toString()}
 				type={'number'}
 				label={'Your Vote'}
 			/>

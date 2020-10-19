@@ -21,7 +21,7 @@ const Feed: FunctionComponent<Props> = ({ groupID }) => {
 			[groupID: string]: number
 		}
 	}>({})
-	
+
 	useEffect(() => {
 		const actionGroupValues: {
 			[name: string]: {
@@ -48,9 +48,8 @@ const Feed: FunctionComponent<Props> = ({ groupID }) => {
 		setActionValues(actionGroupValues)
 	}, [groups])
 
-
 	useEffect(() => {
-		const unsubscribes: (()=> void)[] = []
+		const unsubscribes: (() => void)[] = []
 		for (const uid of Object.keys(allMembers)) {
 			unsubscribes.push(subscribeToMember(dispatch, uid))
 		}

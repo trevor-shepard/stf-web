@@ -8,17 +8,19 @@ interface Props {
 	groups: GroupsState
 	groupID: string
 	handleAdd?: () => void
+	Left?: FunctionComponent
 }
 
 const Screen: FunctionComponent<Props> = ({
 	groupID,
 	groups,
 	selectGroup,
-	handleAdd
+	handleAdd,
+	Left
 }) => {
 	return (
 		<Container>
-			<SpaceHolder />
+			{ Left ? <Left/ > : <SpaceHolder />}
 			<GroupSelector
 				groupID={groupID}
 				selectGroup={selectGroup}

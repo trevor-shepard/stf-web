@@ -157,8 +157,7 @@ export const recordActivity = (
 	dispatch(recieveAction(action))
 }
 
-
-export const subscribeToMember = (dispatch: Dispatch, uid: string  ) => {
+export const subscribeToMember = (dispatch: Dispatch, uid: string) => {
 	const unsubscribe = db
 		.collection('actions')
 		.where('uid', '==', uid)

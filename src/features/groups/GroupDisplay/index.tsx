@@ -4,6 +4,7 @@ import React, {
 	Dispatch,
 	SetStateAction
 } from 'react'
+import {keyframes} from '@emotion/core'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
@@ -22,9 +23,11 @@ const GroupDisplay: FunctionComponent<Props> = ({
 	setDisplay
 }) => {
 	const allMembers = useSelector((state: RootState) => state.members)
-
 	const [name, setName] = useState('')
-	const { activities } = group
+	const [copied, setCopied] = useState(false)
+	const { activities, id , locked } = group
+	const isUnLocked =  Object.values(locked).reduce((acc, curr) => curr ? acc + 1 : acc, 0) < ( Object.values(locked).length / 2)
+
 
 	const activityValues: { [name: string]: number } = Object.keys(
 		activities
@@ -162,6 +165,12 @@ const GroupDisplay: FunctionComponent<Props> = ({
 					shame
 				</ToggleSelector>
 			</DisplayToggle>
+			{isUnLocked && <InviteCode onClick={async () => {
+				await navigator.clipboard.writeText(`${id}`)
+				setCopied(true)
+			}}>invite code - {id} {<Copied out={!copied}> copied to clipboard </Copied>} </InviteCode>}
+			
+
 			<OverflowContainer>
 				{display === 'fame' && fame}
 				{display === 'shame' && shame}
@@ -187,6 +196,68 @@ const DisplayToggle = styled.div`
 	margin-bottom: 4%;
 `
 
+const InviteCode = styled.div`
+	font-family: Amsi Pro Narw;
+	font-style: normal;
+	font-weight: 800;
+	font-size: 17px;
+	line-height: 120%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	letter-spacing: 0.177303px;
+	color: #262626;
+	cursor: pointer;
+	position: relative;
+	margin-bottom: 10px;
+`
+
+interface CopiedProps {
+	out: boolean
+}
+
+const fadeIn = keyframes`
+  from {
+    transform: scale(.75);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    transform: scale(1);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(.75);
+    opacity: 1;
+  }
+`;
+const Copied = styled.div<CopiedProps>`
+	font-family: Amsi Pro Narw;
+	font-style: normal;
+	font-weight: 800;
+	font-size: 12px;
+	line-height: 120%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	letter-spacing: 0.177303px;
+	color: #262626;
+	position: absolute;
+	top: 15px;
+	visibility: ${props => props.out ? 'hidden' : 'visible'};
+	animation: ${props => props.out ? fadeOut : fadeIn} .5s linear;
+	transition: visibility 1s linear;
+    opacity: 1;
+`
+
 interface ToggleSelectorProps {
 	selected: boolean
 }
@@ -210,6 +281,7 @@ const ToggleSelector = styled.div<ToggleSelectorProps>`
 	line-height: 114%;
 	text-align: center;
 	letter-spacing: 0.2px;
+	cursor: pointer;
 `
 const Activity = styled.div`
 	background: #c4c4c4 40%;

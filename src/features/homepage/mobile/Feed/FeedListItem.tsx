@@ -54,7 +54,9 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 						? `today at ${momentDate.format('HH:mm A')}`
 						: yesterday
 						? `yesterday at ${momentDate.format('HH:mm A')}`
-						: `${momentDate.format('YYYY/M/D')} at ${momentDate.format('HH:mm A')}`}
+						: `${momentDate.format('YYYY/M/D')} at ${momentDate.format(
+								'h:mm A'
+						  )}`}
 				</SubTitle>
 			</ActivityBox>
 			<ScoreBox fame={fame}>

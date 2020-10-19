@@ -6,9 +6,10 @@ import { createGroup } from 'store/slices/groupsSlice'
 
 interface Props {
 	toggleModal: () => void
+	hideModal: () => void
 }
 
-const CreateGroup: FunctionComponent<Props> = ({ toggleModal }) => {
+const CreateGroup: FunctionComponent<Props> = ({ toggleModal, hideModal }) => {
 	const [name, setName] = useState('')
 	const [error, setError] = useState('')
 	const [loading, setLoading] = useState(false)
@@ -22,6 +23,8 @@ const CreateGroup: FunctionComponent<Props> = ({ toggleModal }) => {
 			try {
 				setLoading(true)
 				await dispatch(createGroup(name))
+				hideModal()
+
 			} catch (error) {
 				setError('name cant be blank')
 				setLoading(false)

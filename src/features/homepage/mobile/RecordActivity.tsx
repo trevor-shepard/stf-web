@@ -81,7 +81,7 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 						{verb.split('_').join(' ')} {unit}
 					</Title>
 					{error && <Error>{error}</Error>}
-					
+
 					<SubTitle>
 						{date} at {time}
 					</SubTitle>
@@ -102,36 +102,33 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 
 					<TextInput
 						handleInput={e => {
-
 							const date = e.target.value
 							const future = moment(date).isAfter()
-							
+
 							if (future) {
 								setError('date cannot be in the future')
 							} else {
 								setDate(e.target.value)
 							}
-
-							
 						}}
 						value={date.toString()}
 						type={'date'}
 						label={'date'}
-
 					/>
 					<TextInput
 						handleInput={e => {
-							const momentDate = moment(e.target.value).set('date', moment(date).date()).set('month', moment(date).month()).set('year', moment(date).year())
-							
+							const momentDate = moment(e.target.value)
+								.set('date', moment(date).date())
+								.set('month', moment(date).month())
+								.set('year', moment(date).year())
+
 							const future = momentDate.isAfter()
-							
+
 							if (future) {
 								setError('date cannot be in the future')
-
 							} else {
 								setTime(e.target.value)
 							}
-							
 						}}
 						value={time.toString()}
 						type={'time'}
