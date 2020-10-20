@@ -88,10 +88,10 @@ const MobileGroups: FunctionComponent = () => {
 }
 
 const Container = styled.div`
-	height: calc(100vh - 60px);
+	height: 100%;
 	display: flex;
 	flex-direction: column;
-	position: relative;
+	justify-content: space-between;
 	overflow: none;
 
 `
@@ -167,10 +167,11 @@ const OverflowContainer = styled.div`
 	height: 100%;
 `
 
+
 const Add = styled.img`
 	position: absolute;
 	z-index: 10;
-	bottom: 10%;
+	bottom: 90px;
 	right: 10%;
 `
 

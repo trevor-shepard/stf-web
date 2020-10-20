@@ -41,7 +41,6 @@ const MobileHomepage: FunctionComponent = () => {
 }
 
 const Container = styled.div`
-	/* height: calc(100vh - 60px); */
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -59,7 +58,6 @@ const Add = styled.img`
 	z-index: 10;
 	bottom: 90px;
 	right: 10%;
-	background: pink;
 `
 
 const Right = styled.div`
