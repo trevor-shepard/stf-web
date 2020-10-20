@@ -20,8 +20,8 @@ const TextInput: FunctionComponent<TextInputProps> = ({
 }) => {
 	return (
 		<Container width={width ? width : '90%'}>
-			<Label>{label}</Label>
 			<Input
+				placeholder={label}
 				value={value}
 				type={type ? type : 'text'}
 				onChange={handleInput}
@@ -47,6 +47,7 @@ type InputProps = {
 }
 
 const Input = styled.input<InputProps>`
+	font-family: AmsiPro-Ultra;
 	width: 100%;
 	padding: 12px;
 	margin: 6px 0 4px;
@@ -59,6 +60,10 @@ const Input = styled.input<InputProps>`
 	box-sizing: border-box;
 	border-radius: 2px;
 	padding: 5px;
+	border: none;
+	border-bottom: 6px solid #271600;
+	text-transform: uppercase;
+	background-color: #ffffff;
 	/* &:focus ~ .floating-label{
         top: 8px;
         bottom: 10px;

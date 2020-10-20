@@ -1,7 +1,8 @@
-import React, { FunctionComponent, Dispatch, SetStateAction } from 'react'
+import React, { FunctionComponent, Dispatch, SetStateAction, useState } from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
+import Text from 'components/inputs/text'
 
 interface Props {
 	setActivity: Dispatch<SetStateAction<string>>
@@ -9,7 +10,7 @@ interface Props {
 
 const SelectActivity: FunctionComponent<Props> = ({ setActivity }) => {
 	const groups = useSelector((state: RootState) => state.groups)
-
+	const [search, setSearch] = useState('')
 	// get all verbs from all groups
 	const activities = Object.keys(
 		Object.values(groups).reduce((acc, group) => {
@@ -17,7 +18,7 @@ const SelectActivity: FunctionComponent<Props> = ({ setActivity }) => {
 
 			return { ...acc, ...activities }
 		}, {})
-	).map((_activity, i) => {
+	).filter(_activity => _activity.includes(search)).map((_activity, i) => {
 		const [verb, unit] = _activity.split('$')
 		return (
 			<GreyContainer
@@ -33,6 +34,7 @@ const SelectActivity: FunctionComponent<Props> = ({ setActivity }) => {
 	return (
 		<>
 			<Title>Record An Activity</Title>
+			<Text label='search' value={search} handleInput={(e) =>setSearch(e.target.value)}  />
 			{activities}
 		</>
 	)
