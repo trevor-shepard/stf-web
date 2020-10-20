@@ -7,7 +7,6 @@ import { joinGroup } from 'store/slices/groupsSlice'
 interface Props {
 	toggleModal: () => void
 	hideModal: () => void
-	
 }
 
 const JoinGroup: FunctionComponent<Props> = ({ toggleModal, hideModal }) => {

@@ -24,7 +24,6 @@ const CreateGroup: FunctionComponent<Props> = ({ toggleModal, hideModal }) => {
 				setLoading(true)
 				await dispatch(createGroup(name))
 				hideModal()
-
 			} catch (error) {
 				setError('name cant be blank')
 				setLoading(false)

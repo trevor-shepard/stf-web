@@ -1,22 +1,18 @@
 import React, { FunctionComponent, useState, FormEvent } from 'react'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
-import moment from 'moment'
-import { RootState } from 'store/rootReducer'
 import styled from '@emotion/styled'
-import Modal from 'components/Modal'
+import moment from 'moment'
+import { useDispatch } from 'react-redux'
+
 import TextInput from 'components/inputs/text'
 import { recordActivity } from 'store/slices/membersSlice'
-
 interface Props {
+	activity: string
 	hideModal: () => void
-	name?: string
 }
 
-const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
+const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
+	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
-	const groups = useSelector((state: RootState) => state.groups)
-	const [activity, setActivity] = useState(name ? name : '')
 	const [quantity, setQuantity] = useState(1)
 	const [date, setDate] = useState(moment().format('YYYY/M/D'))
 	const [time, setTime] = useState(moment().format('HH:mm'))
@@ -36,23 +32,6 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 	}
 
 	const [verb, unit] = activity.split('$')
-	const dispatch = useDispatch()
-
-	// get all verbs from all groups
-	const activities = Object.keys(
-		Object.values(groups).reduce((acc, group) => {
-			const { activities } = group
-
-			return { ...acc, ...activities }
-		}, {})
-	).map((_activity, i) => {
-		const [verb, unit] = _activity.split('$')
-		return (
-			<div key={`${i}-activity-item`} onClick={() => setActivity(_activity)}>
-				{verb.split('_').join(' ')} -- {unit}
-			</div>
-		)
-	})
 
 	const handleSubmit = async () => {
 		try {
@@ -66,13 +45,8 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 		}
 	}
 
-	return activity === '' ? (
-		<Modal hideModal={hideModal}>
-			<Title>Record An Activity</Title>
-			{activities}
-		</Modal>
-	) : (
-		<Modal hideModal={hideModal}>
+	return (
+		<>
 			{loading ? (
 				<>loading</>
 			) : (
@@ -138,7 +112,7 @@ const RecordActivity: FunctionComponent<Props> = ({ hideModal, name }) => {
 					<SubmitButton onClick={handleSubmit}>submit</SubmitButton>
 				</>
 			)}
-		</Modal>
+		</>
 	)
 }
 
@@ -147,6 +121,7 @@ const Title = styled.div`
 	font-style: normal;
 	font-weight: 800;
 	font-size: 22px;
+	margin-top: 5%;
 `
 
 const SubTitle = styled.div`
@@ -197,4 +172,4 @@ const Error = styled.div`
 	padding: 5px 15px 3px 25px;
 `
 
-export default RecordActivity
+export default Record

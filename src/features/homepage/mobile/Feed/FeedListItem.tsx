@@ -24,13 +24,14 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 	const actionPhoto = action.photo
 	const [verb, unit] = name.split('$')
 
-	const value =
+	const value = Math.floor(
 		Object.values(groupValues).length === 0
 			? 0
 			: groupID
 			? groupValues[groupID]
 			: Object.values(groupValues).reduce((acc, curr) => acc + curr, 0) /
 			  Object.values(groupValues).length
+	)
 
 	const score = value * quantity
 

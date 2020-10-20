@@ -109,16 +109,18 @@ export const joinGroup = (id: string): AppThunk => async (
 
 		const { members, locked } = group
 
-		const isLocked =  Object.values(locked).reduce((acc, curr) => curr ? acc + 1 : acc, 0) >( Object.values(locked).length / 2)
+		const isLocked =
+			Object.values(locked).reduce((acc, curr) => (curr ? acc + 1 : acc), 0) >
+			Object.values(locked).length / 2
 
 		if (isLocked) throw Error('group is locked')
-		
+
 		await db
 			.collection('groups')
 			.doc(id)
 			.update({
 				members: [...members, uid],
-				locked: {...locked, [uid as string]: false}
+				locked: { ...locked, [uid as string]: false }
 			})
 
 		for (const member of members) dispatch(fetchMember(member))
@@ -250,29 +252,24 @@ export const addActivity = (
 	} catch (error) {}
 }
 
-
-
 export const subscribeToGroups = (dispatch: Dispatch<any>, uid: string) => {
-	 	const unsubscribe = db.collection('groups')
-			.where('members', 'array-contains', uid)
-			.onSnapshot(querySnapshot => {
-				const groups: { [id: string]: Group } = {}
-				querySnapshot.forEach(doc => {
-					const group = doc.data() as Group
-					groups[group.id] = group
-				})
-
-
-				for (const group of Object.values(groups)) {
-					const { members } = group
-					for (const member of members) dispatch(fetchMember(member))
-				}
-		
-				dispatch(recieveGroups(groups))
-
-				
+	const unsubscribe = db
+		.collection('groups')
+		.where('members', 'array-contains', uid)
+		.onSnapshot(querySnapshot => {
+			const groups: { [id: string]: Group } = {}
+			querySnapshot.forEach(doc => {
+				const group = doc.data() as Group
+				groups[group.id] = group
 			})
-			
-		return unsubscribe
-		
+
+			for (const group of Object.values(groups)) {
+				const { members } = group
+				for (const member of members) dispatch(fetchMember(member))
+			}
+
+			dispatch(recieveGroups(groups))
+		})
+
+	return unsubscribe
 }

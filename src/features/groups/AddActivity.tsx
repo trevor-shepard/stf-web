@@ -55,7 +55,7 @@ const AddActivityModal: FunctionComponent<Props> = ({
 			/>
 			<TextInput
 				handleInput={e => setVote(Math.abs(parseInt(e.target.value)))}
-				value={isShame ? (vote * -1).toString() : (vote * -1).toString()}
+				value={isShame ? (vote * -1).toString() : (vote.toString())}
 				type={'number'}
 				label={'Your Vote'}
 			/>

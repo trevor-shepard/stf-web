@@ -1,32 +1,33 @@
 import React, { FunctionComponent, Dispatch, SetStateAction } from 'react'
 import GroupSelector from './GroupSelector'
 import styled from '@emotion/styled'
-import { add } from 'assets/icons'
 import { GroupsState } from 'types'
 interface Props {
-	selectGroup: Dispatch<SetStateAction<string>>
 	groups: GroupsState
 	groupID: string
-	handleAdd?: () => void
-	Left?: FunctionComponent
+	selectGroup: Dispatch<SetStateAction<string>>
+	Left?: FunctionComponent | JSX.Element | false
+	Right?: FunctionComponent | JSX.Element | false
 }
 
 const Screen: FunctionComponent<Props> = ({
 	groupID,
 	groups,
 	selectGroup,
-	handleAdd,
+	Right,
 	Left
 }) => {
 	return (
 		<Container>
-			{ Left ? <Left/ > : <SpaceHolder />}
+			<LeftContainer>{Left ? Left : <SpaceHolder />}</LeftContainer>
+
 			<GroupSelector
 				groupID={groupID}
 				selectGroup={selectGroup}
 				groups={groups}
 			/>
-			<AddIcon onClick={handleAdd} src={add} />
+
+			<RightContainer>{Right ? Right : <SpaceHolder />}</RightContainer>
 		</Container>
 	)
 }
@@ -34,21 +35,27 @@ const Screen: FunctionComponent<Props> = ({
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	height: 60px;
 	border-bottom: 0.5px solid #7b8794;
 	background: #ffffff;
 	width: 100%;
-`
-
-const AddIcon = styled.img`
-	padding-right: 4%;
+	position: relative;
 `
 
 const SpaceHolder = styled.div`
 	width: 18px;
 	padding-left: 4%;
+`
+
+const LeftContainer = styled.div`
+	position: absolute;
+	left: 10px;
+`
+const RightContainer = styled.div`
+	position: absolute;
+	right: 10px;
 `
 
 export default Screen

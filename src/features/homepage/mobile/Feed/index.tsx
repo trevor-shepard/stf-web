@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, {
+	FunctionComponent,
+	useEffect,
+	useState,
+	Dispatch,
+	SetStateAction
+} from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
@@ -9,9 +15,10 @@ import { subscribeToMember } from 'store/slices/membersSlice'
 
 interface Props {
 	groupID: string
+	setGroupID: Dispatch<SetStateAction<string>>
 }
 
-const Feed: FunctionComponent<Props> = ({ groupID }) => {
+const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 	const dispatch = useDispatch()
 	const allMembers = useSelector((state: RootState) => state.members)
 	const groups = useSelector((state: RootState) => state.groups)
@@ -21,6 +28,12 @@ const Feed: FunctionComponent<Props> = ({ groupID }) => {
 			[groupID: string]: number
 		}
 	}>({})
+
+	useEffect(() => {
+		const firstGroup = Object.values(groups)[0]
+
+		if (firstGroup && groupID === '') setGroupID(firstGroup.id)
+	}, [groups, groupID, setGroupID])
 
 	useEffect(() => {
 		const actionGroupValues: {
