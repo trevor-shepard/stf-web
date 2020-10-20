@@ -8,7 +8,7 @@ import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import Text from 'components/inputs/text'
-
+import { ModalTitle } from 'components/styled'
 interface Props {
 	setActivity: Dispatch<SetStateAction<string>>
 }
@@ -40,25 +40,19 @@ const SelectActivity: FunctionComponent<Props> = ({ setActivity }) => {
 
 	return (
 		<>
-			<Title>Record An Activity</Title>
+			<ModalTitle>Record An Activity</ModalTitle>
 			<Text
 				label="search"
 				value={search}
 				handleInput={e => setSearch(e.target.value)}
 			/>
-			{activities}
+			<OverflowContainer>
+				{activities}
+			</OverflowContainer>
+			
 		</>
 	)
 }
-
-const Title = styled.div`
-	font-family: Amsi Pro Narw;
-	font-style: normal;
-	font-weight: 800;
-	font-size: 22px;
-	margin-top: 5%;
-	margin-bottom: 20px;
-`
 
 const GreyContainer = styled.div`
 	background: #c4c4c4 40%;
@@ -83,5 +77,14 @@ const Content = styled.div`
 	color: #262626;
 	padding: 4%;
 `
+
+const OverflowContainer = styled.div`
+	height: 60%;
+	overflow: scroll;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	width: 90%;
+`
+
 
 export default SelectActivity

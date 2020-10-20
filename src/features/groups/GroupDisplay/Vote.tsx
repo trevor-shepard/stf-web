@@ -6,6 +6,8 @@ import TextInput from 'components/inputs/text'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import { requestVote } from 'store/slices/groupsSlice'
+import { ModalTitle, SubmitButton } from 'components/styled'
+
 interface Props {
 	hideModal: () => void
 
@@ -69,9 +71,9 @@ const Vote: FunctionComponent<Props> = ({
 				<div>loading</div>
 			) : (
 				<>
-					<Title>
+					<ModalTitle>
 						{verb} 1 {unit} - {currAvg}
-					</Title>
+					</ModalTitle>
 					<TextInput
 						handleInput={e => setVote(parseInt(e.target.value))}
 						value={vote.toString()}
@@ -87,20 +89,6 @@ const Vote: FunctionComponent<Props> = ({
 	)
 }
 
-const Title = styled.div``
 
-const SubmitButton = styled.button`
-	font-family: Poppins;
-	background-color: #3e3e3e;
-	border-radius: 3px;
-	color: white;
-	display: block;
-	width: 30%;
-	font-weight: 500;
-	line-height: 22px;
-	padding: 11px;
-	margin-bottom: 22px;
-	text-transform: capitalize;
-`
 
 export default Vote

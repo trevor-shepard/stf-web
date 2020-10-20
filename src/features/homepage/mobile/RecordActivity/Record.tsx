@@ -2,8 +2,8 @@ import React, { FunctionComponent, useState, FormEvent } from 'react'
 import styled from '@emotion/styled'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
-
 import TextInput from 'components/inputs/text'
+import { ModalTitle, ModalSubTitle, SubmitButton } from 'components/styled'
 import { recordActivity } from 'store/slices/membersSlice'
 interface Props {
 	activity: string
@@ -51,14 +51,14 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 				<>loading</>
 			) : (
 				<>
-					<Title>
+					<ModalTitle>
 						{verb.split('_').join(' ')} {unit}
-					</Title>
+					</ModalTitle>
 					{error && <Error>{error}</Error>}
 
-					<SubTitle>
+					<ModalSubTitle>
 						{date} at {time}
-					</SubTitle>
+					</ModalSubTitle>
 					{fileAsImage && (
 						<ImgContainer>
 							<Image src={fileAsImage} />
@@ -115,36 +115,9 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 	)
 }
 
-const Title = styled.div`
-	font-family: Amsi Pro Narw;
-	font-style: normal;
-	font-weight: 800;
-	font-size: 22px;
-	margin-top: 5%;
-`
-
-const SubTitle = styled.div`
-	font-family: Mulish;
-	font-style: normal;
-	font-weight: 200;
-	font-size: 14px;
-`
 
 const FileInput = styled.input``
 
-const SubmitButton = styled.button`
-	font-family: Poppins;
-	background-color: #3e3e3e;
-	border-radius: 3px;
-	color: white;
-	display: block;
-	width: 30%;
-	font-weight: 500;
-	line-height: 22px;
-	padding: 11px;
-	margin-bottom: 22px;
-	text-transform: capitalize;
-`
 
 const ImgContainer = styled.div`
 	margin-top: 10%;

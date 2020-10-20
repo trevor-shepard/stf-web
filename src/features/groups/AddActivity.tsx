@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import Modal from 'components/Modal'
 import TextInput from 'components/inputs/text'
 import { addActivity } from 'store/slices/groupsSlice'
+import { ModalTitle, SubmitButton } from 'components/styled'
 
 interface Props {
 	hideModal: () => void
@@ -41,7 +42,7 @@ const AddActivityModal: FunctionComponent<Props> = ({
 
 	return (
 		<Modal hideModal={hideModal}>
-			<Title>add a activity</Title>
+			<ModalTitle>add a activity</ModalTitle>
 			{error !== '' && error}
 			<TextInput
 				handleInput={e => setName(e.target.value)}
@@ -64,20 +65,5 @@ const AddActivityModal: FunctionComponent<Props> = ({
 	)
 }
 
-const Title = styled.div``
-
-const SubmitButton = styled.button`
-	font-family: Poppins;
-	background-color: #3e3e3e;
-	border-radius: 3px;
-	color: white;
-	display: block;
-	width: 30%;
-	font-weight: 500;
-	line-height: 22px;
-	padding: 11px;
-	margin-bottom: 22px;
-	text-transform: capitalize;
-`
 
 export default AddActivityModal
