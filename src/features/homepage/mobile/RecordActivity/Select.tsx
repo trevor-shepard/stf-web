@@ -46,10 +46,7 @@ const SelectActivity: FunctionComponent<Props> = ({ setActivity }) => {
 				value={search}
 				handleInput={e => setSearch(e.target.value)}
 			/>
-			<OverflowContainer>
-				{activities}
-			</OverflowContainer>
-			
+			<OverflowContainer>{activities}</OverflowContainer>
 		</>
 	)
 }
@@ -85,6 +82,5 @@ const OverflowContainer = styled.div`
 	margin-top: 30px;
 	width: 90%;
 `
-
 
 export default SelectActivity

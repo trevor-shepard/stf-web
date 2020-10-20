@@ -51,6 +51,7 @@ const Container = styled.div`
 const OverflowContainer = styled.div`
 	overflow: scroll;
 	height: 100%;
+	scroll-margin-bottom: 60px;
 `
 
 const Add = styled.img`

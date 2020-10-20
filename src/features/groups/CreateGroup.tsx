@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import TextInput from 'components/inputs/text'
+import { ModalTitle, SubmitButton } from 'components/styled'
 import { createGroup } from 'store/slices/groupsSlice'
 
 interface Props {
@@ -35,8 +36,8 @@ const CreateGroup: FunctionComponent<Props> = ({ toggleModal, hideModal }) => {
 		<>loading</>
 	) : (
 		<>
-			<div onClick={toggleModal}>Join Group</div>
-			<Title>Start a Group</Title>
+			<Toggle onClick={toggleModal}>Join</Toggle>
+			<ModalTitle>Start a Group</ModalTitle>
 			{error !== '' && error}
 			<TextInput
 				handleInput={e => setName(e.target.value)}
@@ -48,20 +49,12 @@ const CreateGroup: FunctionComponent<Props> = ({ toggleModal, hideModal }) => {
 	)
 }
 
-const Title = styled.div``
-
-const SubmitButton = styled.button`
-	font-family: Poppins;
-	background-color: #3e3e3e;
-	border-radius: 3px;
-	color: white;
-	display: block;
-	width: 30%;
-	font-weight: 500;
-	line-height: 22px;
-	padding: 11px;
-	margin-bottom: 22px;
-	text-transform: capitalize;
+const Toggle = styled.div`
+	font-family: Amsi Pro Narw;
+	font-size: 10px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
 `
 
 export default CreateGroup

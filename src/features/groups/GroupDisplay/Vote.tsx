@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import styled from '@emotion/styled'
 import Modal from 'components/Modal'
 import TextInput from 'components/inputs/text'
 import { useSelector } from 'react-redux'
@@ -88,7 +87,5 @@ const Vote: FunctionComponent<Props> = ({
 		</Modal>
 	)
 }
-
-
 
 export default Vote

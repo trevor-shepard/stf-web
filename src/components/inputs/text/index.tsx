@@ -24,11 +24,10 @@ const TextInput: FunctionComponent<TextInputProps> = ({
 				placeholder={label}
 				value={value}
 				type={type ? type : 'text'}
-				onChange={(e) => {
+				onChange={e => {
 					e.preventDefault()
 					handleInput(e)
-				}
-				}
+				}}
 				height={height ? height : '40px'}
 			/>
 		</Container>

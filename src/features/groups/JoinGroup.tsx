@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import TextInput from 'components/inputs/text'
+import { ModalTitle, SubmitButton } from 'components/styled'
 import { joinGroup } from 'store/slices/groupsSlice'
 
 interface Props {
@@ -35,35 +36,26 @@ const JoinGroup: FunctionComponent<Props> = ({ toggleModal, hideModal }) => {
 		<>loading</>
 	) : (
 		<>
-			<>
-				<div onClick={toggleModal}>Create Group</div>
-				<Title>Join Group</Title>
-				{error !== '' && error}
-				<TextInput
-					handleInput={e => setCode(e.target.value)}
-					value={code}
-					label={'Group Code'}
-				/>
-				<SubmitButton onClick={handleCreate}>Submit</SubmitButton>
-			</>
+			<Toggle onClick={toggleModal}>Create</Toggle>
+
+			<ModalTitle>Join Group</ModalTitle>
+			{error !== '' && error}
+			<TextInput
+				handleInput={e => setCode(e.target.value)}
+				value={code}
+				label={'Group Code'}
+			/>
+			<SubmitButton onClick={handleCreate}>Submit</SubmitButton>
 		</>
 	)
 }
 
-const Title = styled.div``
-
-const SubmitButton = styled.button`
-	font-family: Poppins;
-	background-color: #3e3e3e;
-	border-radius: 3px;
-	color: white;
-	display: block;
-	width: 30%;
-	font-weight: 500;
-	line-height: 22px;
-	padding: 11px;
-	margin-bottom: 22px;
-	text-transform: capitalize;
+const Toggle = styled.div`
+	font-family: Amsi Pro Narw;
+	font-size: 10px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
 `
 
 export default JoinGroup

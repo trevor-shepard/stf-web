@@ -115,9 +115,7 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 	)
 }
 
-
 const FileInput = styled.input``
-
 
 const ImgContainer = styled.div`
 	margin-top: 10%;

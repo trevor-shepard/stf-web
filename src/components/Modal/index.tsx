@@ -32,6 +32,7 @@ const Modal = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: space-between;
 	width: 90%;
 	min-height: 340px;
 	max-height: 80%;
@@ -41,6 +42,8 @@ const Modal = styled.div`
 	border-radius: 10px;
 	background-color: #ffffff;
 	opacity: 1;
+	position: relative;
+	padding-bottom: 20px;
 `
 
 export default MobileGroups

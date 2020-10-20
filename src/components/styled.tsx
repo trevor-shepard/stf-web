@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 
-
 export const ModalTitle = styled.div`
 	font-family: Amsi Pro Narw;
 	font-style: normal;
@@ -10,14 +9,13 @@ export const ModalTitle = styled.div`
 `
 
 export const SubmitButton = styled.button`
-    font-family: Amsi Pro Narw;
-    border-radius: 2px;
-    border: 1px solid black;
-    min-width: 200px;
-    padding: 10px;
-    background-color: #ffffff;
+	font-family: Amsi Pro Narw;
+	border-radius: 2px;
+	border: 1px solid black;
+	min-width: 200px;
+	padding: 10px;
+	background-color: #ffffff;
 `
-
 
 export const ModalSubTitle = styled.div`
 	font-family: Mulish;
