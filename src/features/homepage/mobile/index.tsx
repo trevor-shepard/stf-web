@@ -46,7 +46,7 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	position: relative;
+	overflow: none;
 `
 
 const OverflowContainer = styled.div`
@@ -59,7 +59,7 @@ const Add = styled.img`
 	z-index: 10;
 	bottom: 90px;
 	right: 10%;
-	background: grey;
+	background: pink;
 `
 
 const Right = styled.div`
