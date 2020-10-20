@@ -73,13 +73,4 @@ const Input = styled.input<InputProps>`
     } */
 `
 
-const Label = styled.label`
-	font-family: Poppins;
-	font-weight: 400;
-	font-style: normal;
-	letter-spacing: 0em;
-	text-transform: none;
-	line-height: 1.9em;
-`
-
 export default TextInput

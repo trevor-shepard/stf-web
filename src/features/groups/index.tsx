@@ -19,7 +19,6 @@ const MobileGroups: FunctionComponent = () => {
 
 	const [modal, setModal] = useState(false)
 
-
 	useEffect(() => {
 		const firstGroup = Object.values(groups)[0]
 
@@ -32,17 +31,15 @@ const MobileGroups: FunctionComponent = () => {
 		return unsubscribe
 	}, [groups, dispatch, uid])
 
-	
 	const group = groups[groupID]
-	
-	if (!group) return (<>loading</>)
+
+	if (!group) return <>loading</>
 
 	const { locked } = group
 
 	const isUnLocked =
 		Object.values(locked).reduce((acc, curr) => (curr ? acc + 1 : acc), 0) <
 		Object.values(locked).length / 2
-
 
 	return (
 		<Container>
@@ -57,27 +54,35 @@ const MobileGroups: FunctionComponent = () => {
 				groupID={groupID}
 				groups={groups}
 				selectGroup={setGroupID}
-				Left={isUnLocked && (
-					<InviteCode
-						onClick={async () => {
-							await navigator.clipboard.writeText(`${groupID}`)
-							setCopied(true)
-						}}
-					>
-						copy invite code
-						{<Copied out={!copied}> copied to clipboard </Copied>}
-					</InviteCode>
-				)}
+				Left={
+					isUnLocked && (
+						<InviteCode
+							onClick={async () => {
+								await navigator.clipboard.writeText(`${groupID}`)
+								setCopied(true)
+							}}
+						>
+							copy invite code
+							{<Copied out={!copied}> copied to clipboard </Copied>}
+						</InviteCode>
+					)
+				}
 				// Right={<AddIcon onClick={() => setModal(!modal)} src={add} />}
 			/>
 
 			<Add src={add_round} onClick={() => setModal(!modal)} />
 
-			{group ? (
-				<GroupDisplay group={group} display={display} setDisplay={setDisplay} />
-			) : (
-				'create or join a group'
-			)}
+			<OverflowContainer>
+				{group ? (
+					<GroupDisplay
+						group={group}
+						display={display}
+						setDisplay={setDisplay}
+					/>
+				) : (
+					'create or join a group'
+				)}
+			</OverflowContainer>
 		</Container>
 	)
 }
@@ -88,10 +93,6 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: relative;
-`
-
-const AddIcon = styled.img`
-	padding-right: 4%;
 `
 
 const InviteCode = styled.div`
@@ -111,8 +112,6 @@ const InviteCode = styled.div`
 	width: 100px;
 	margin-top: 10px;
 `
-
-
 
 interface CopiedProps {
 	out: boolean
@@ -162,14 +161,16 @@ const Copied = styled.div<CopiedProps>`
 	width: 130px;
 `
 
+const OverflowContainer = styled.div`
+	overflow: scroll;
+	height: 100%;
+`
 
 const Add = styled.img`
 	position: absolute;
 	z-index: 10;
-	left: 10%;
-	top: 10%;
-	left: 76%;
-	top: 86%;
+	bottom: 10%;
+	right: 10%;
 `
 
 export default MobileGroups

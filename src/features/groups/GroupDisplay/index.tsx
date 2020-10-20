@@ -19,8 +19,8 @@ const GroupDisplay: FunctionComponent<Props> = ({
 	setDisplay
 }) => {
 	const [name, setName] = useState('')
-	const { activities} = group
-	
+	const { activities } = group
+
 	const activityValues: { [name: string]: number } = Object.keys(
 		activities
 	).reduce((acc, name) => {
@@ -114,7 +114,6 @@ const GroupDisplay: FunctionComponent<Props> = ({
 					shame
 				</ToggleSelector>
 			</DisplayToggle>
-			
 
 			<OverflowContainer>
 				{display === 'fame' && fame}
@@ -139,8 +138,6 @@ const DisplayToggle = styled.div`
 	margin-top: 4%;
 	margin-bottom: 4%;
 `
-
-
 
 interface ToggleSelectorProps {
 	selected: boolean

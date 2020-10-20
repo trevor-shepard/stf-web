@@ -64,8 +64,7 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 							<Image src={fileAsImage} />
 						</ImgContainer>
 					)}
-
-					<input type="file" onChange={handleImageAsFile} />
+					<FileInput id="upload" type="file" onChange={handleImageAsFile} />
 
 					<TextInput
 						handleInput={e => setQuantity(parseInt(e.target.value))}
@@ -130,6 +129,8 @@ const SubTitle = styled.div`
 	font-weight: 200;
 	font-size: 14px;
 `
+
+const FileInput = styled.input``
 
 const SubmitButton = styled.button`
 	font-family: Poppins;

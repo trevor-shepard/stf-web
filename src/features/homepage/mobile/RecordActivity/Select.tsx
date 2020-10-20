@@ -1,4 +1,9 @@
-import React, { FunctionComponent, Dispatch, SetStateAction, useState } from 'react'
+import React, {
+	FunctionComponent,
+	Dispatch,
+	SetStateAction,
+	useState
+} from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
@@ -18,23 +23,29 @@ const SelectActivity: FunctionComponent<Props> = ({ setActivity }) => {
 
 			return { ...acc, ...activities }
 		}, {})
-	).filter(_activity => _activity.includes(search)).map((_activity, i) => {
-		const [verb, unit] = _activity.split('$')
-		return (
-			<GreyContainer
-				key={`${i}-activity-item`}
-				onClick={() => setActivity(_activity)}
-			>
-				<Content>{verb.split('_').join(' ')}</Content>
-				<Content>{unit}</Content>
-			</GreyContainer>
-		)
-	})
+	)
+		.filter(_activity => _activity.includes(search))
+		.map((_activity, i) => {
+			const [verb, unit] = _activity.split('$')
+			return (
+				<GreyContainer
+					key={`${i}-activity-item`}
+					onClick={() => setActivity(_activity)}
+				>
+					<Content>{verb.split('_').join(' ')}</Content>
+					<Content>{unit}</Content>
+				</GreyContainer>
+			)
+		})
 
 	return (
 		<>
 			<Title>Record An Activity</Title>
-			<Text label='search' value={search} handleInput={(e) =>setSearch(e.target.value)}  />
+			<Text
+				label="search"
+				value={search}
+				handleInput={e => setSearch(e.target.value)}
+			/>
 			{activities}
 		</>
 	)
