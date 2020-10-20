@@ -41,8 +41,8 @@ const MobileHomepage: FunctionComponent = () => {
 }
 
 const Container = styled.div`
-	height: calc(100vh - 60px);
-	overflow: scroll;
+	/* height: calc(100vh - 60px); */
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -57,7 +57,7 @@ const OverflowContainer = styled.div`
 const Add = styled.img`
 	position: absolute;
 	z-index: 10;
-	bottom: 50px;
+	bottom: 90px;
 	right: 10%;
 	background: grey;
 `

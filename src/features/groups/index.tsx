@@ -89,7 +89,6 @@ const MobileGroups: FunctionComponent = () => {
 
 const Container = styled.div`
 	height: calc(100vh - 60px);
-	overflow: scroll;
 	display: flex;
 	flex-direction: column;
 	position: relative;
