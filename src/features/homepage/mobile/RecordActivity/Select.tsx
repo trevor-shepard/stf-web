@@ -33,7 +33,7 @@ const SelectActivity: FunctionComponent<Props> = ({ setActivity }) => {
 					onClick={() => setActivity(_activity)}
 				>
 					<Content>{verb.split('_').join(' ')}</Content>
-					<Content>{unit}</Content>
+					<Content>{unit.split('_').join(' ')}</Content>
 				</GreyContainer>
 			)
 		})

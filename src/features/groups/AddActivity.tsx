@@ -43,7 +43,7 @@ const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
 			/>
 			<TextInput
 				handleInput={e => setUnit(e.target.value)}
-				value={unit}
+				value={unit.split('_').join(' ')}
 				label={'action unit'}
 			/>
 			<TextInput

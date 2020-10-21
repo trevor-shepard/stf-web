@@ -56,7 +56,7 @@ const ActivityCarousel: FunctionComponent<Props> = ({
 		const [verb, unit] = _activity.split('$')
 		return (
 			<Item key={`${i}-carousel-item`}>
-				{verb.split('_').join(' ')} a {unit}
+				{verb.split('_').join(' ')} a {unit.split('_').join(' ')}
 			</Item>
 		)
 	})

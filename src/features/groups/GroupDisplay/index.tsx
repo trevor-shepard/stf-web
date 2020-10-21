@@ -42,7 +42,7 @@ const GroupDisplay: FunctionComponent<Props> = ({ group }) => {
 			return (
 				<Activity key={`${i}-activity-fame-item`} onClick={() => setName(name)}>
 					<ActivityDetail>
-						{verb.split('_').join(' ')} 1 {unit}
+						{verb.split('_').join(' ')} 1 {unit.split('_').join(' ')}
 					</ActivityDetail>
 					<ActivityDetail>{score}</ActivityDetail>
 				</Activity>

@@ -149,7 +149,7 @@ export const requestVote = (
 		const activities = group.activities
 
 		const votes = activities[verb]
-
+		
 		const updatedGroup = {
 			...group,
 			activities: {
@@ -176,7 +176,9 @@ export const requestVote = (
 
 			dispatch(recieveGroup(updatedGroup))
 		}
-	} catch (error) {}
+	} catch (error) {
+		debugger
+	}
 }
 
 export const requestRemoveExampleVote = (

@@ -64,7 +64,7 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 			<ScoreBox fame={fame}>
 				<ScoreTitle>{score}</ScoreTitle>
 				<SubTitle>
-					{quantity} {unit}
+					{quantity} {unit.split('_').join(' ')}
 				</SubTitle>
 			</ScoreBox>
 			{actionPhoto ? (

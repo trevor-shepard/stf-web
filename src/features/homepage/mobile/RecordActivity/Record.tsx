@@ -52,7 +52,7 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 			) : (
 				<>
 					<ModalTitle>
-						{verb.split('_').join(' ')} {unit}
+						{verb.split('_').join(' ')} {unit.split('_').join(' ')}
 					</ModalTitle>
 					{error && <Error>{error}</Error>}
 

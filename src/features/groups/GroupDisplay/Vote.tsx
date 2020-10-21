@@ -26,6 +26,7 @@ const Vote: FunctionComponent<Props> = ({
 }) => {
 	const uid = useSelector((state: RootState) => state.user.uid) as string
 	const members = useSelector((state: RootState) => state.members)
+	const group = useSelector((state: RootState) => state.groups[groupID])
 	const [vote, setVote] = useState(0)
 	const [currAvg, setCurrAvg] = useState(0)
 	const [loading, setLoading] = useState(false)
@@ -43,12 +44,13 @@ const Vote: FunctionComponent<Props> = ({
 	const dispatch = useDispatch()
 
 	const handleSubmit = async () => {
+		
 		setLoading(true)
-		await dispatch(requestVote(groupID, verb, vote))
+		await dispatch(requestVote(groupID, name, vote))
 		setLoading(false)
 	}
 
-	const MemberVotes = Object.keys(votes).map((uid, i) => {
+	const MemberVotes = group.members.map((uid, i) => {
 		if (uid === 'example') {
 			return <div>Example - {votes[uid]}</div>
 		}
@@ -59,7 +61,7 @@ const Vote: FunctionComponent<Props> = ({
 
 		return (
 			<div key={`${i}-votes-item`}>
-				{username} - {memberVote}
+				{username}      {memberVote ? memberVote : 'none'}
 			</div>
 		)
 	})
@@ -71,7 +73,7 @@ const Vote: FunctionComponent<Props> = ({
 			) : (
 				<>
 					<ModalTitle>
-						{verb} 1 {unit} - {currAvg}
+						{verb} 1 {unit.split('_').join(' ')} - {currAvg}
 					</ModalTitle>
 					<TextInput
 						handleInput={e => setVote(parseInt(e.target.value))}
