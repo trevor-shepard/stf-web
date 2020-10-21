@@ -198,7 +198,7 @@ const OverflowContainer = styled.div`
 `
 
 const Add = styled.img`
-	position: absolute;
+	position: fixed;
 	z-index: 10;
 	bottom: 90px;
 	right: 10%;
