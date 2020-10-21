@@ -202,6 +202,7 @@ const Add = styled.img`
 	z-index: 10;
 	bottom: 90px;
 	right: 10%;
+	background-color: pink;
 `
 
 const HamburgerContainer = styled.div`
