@@ -3,7 +3,7 @@ import moment from 'moment'
 import styled from '@emotion/styled'
 import { Action, Member } from 'types'
 import { EmptyProfile } from 'assets/icons'
-import Star from './Star'
+// import Star from './Star'
 interface FeedListItemProps {
 	action: Action
 	groupValues: {
@@ -46,9 +46,10 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 		.isSame(momentDate, 'day')
 
 	return (
-		<FeedContainer>
+		<Container>
 			<Placeholder fame={fame}>.</Placeholder>
 			<ActivityBox fame={fame}>
+				<Username>{username}</Username>
 				<Title>{verb}</Title>
 				<SubTitle>
 					{today
@@ -68,29 +69,23 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 			</ScoreBox>
 			{actionPhoto ? (
 				<PhotoContainer>
-					<ProfileImage src={actionPhoto} />
-
-					<Username>{username}</Username>
+					<Image src={actionPhoto} />
 				</PhotoContainer>
 			) : photo ? (
 				<PhotoContainer>
-					<ProfileImage src={photo} />
-
-					<Username>{username}</Username>
+					<Image src={photo} />
 				</PhotoContainer>
 			) : (
 				<PhotoContainer>
-					<ProfileImage src={EmptyProfile} />
-
-					<Username>{username}</Username>
+					<Image src={EmptyProfile} />
 				</PhotoContainer>
 			)}
-			<Star quantity={quantity} value={value} />
-		</FeedContainer>
+			{/* <Star quantity={quantity} value={value} /> */}
+		</Container>
 	)
 }
 
-const FeedContainer = styled.div`
+const Container = styled.div`
 	width: 80%;
 	height: 55px;
 	display: flex;
@@ -98,7 +93,7 @@ const FeedContainer = styled.div`
 	justify-content: space-between;
 	margin-left: 8%;
 	position: relative;
-	margin-bottom: 15%;
+	margin-bottom: 8%;
 `
 
 interface BoxProps {
@@ -157,10 +152,8 @@ const SubTitle = styled.div`
 	line-height: 150%;
 	/* or 16px */
 	transform: skew(20deg);
-
 	display: flex;
 	align-items: center;
-
 	color: #03361e;
 `
 const ScoreTitle = styled.div`
@@ -169,15 +162,28 @@ const ScoreTitle = styled.div`
 	font-weight: 800;
 	font-size: 18px;
 	line-height: 120%;
-	/* or 22px */
 	transform: skew(20deg);
-
 	display: flex;
 	align-items: center;
 	letter-spacing: 0.177303px;
 
 	color: #03361e;
 `
+
+const Username = styled.div`
+	font-family: Amsi Pro Narw;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 11px;
+	line-height: 150%;
+	/* or 16px */
+	transform: skew(20deg);
+	display: flex;
+	align-items: center;
+	color: #03361e;
+
+`
+
 
 const PhotoContainer = styled.div`
 	position: absolute;
@@ -191,25 +197,12 @@ const PhotoContainer = styled.div`
 	z-index: 10;
 `
 
-const ProfileImage = styled.img`
+const Image = styled.img`
 	height: 62px;
 	width: 61px;
 	border-radius: 45.2129020690918px;
 	margin-bottom: 5px;
 	border: 1px solid #7c8c9a;
-`
-
-const Username = styled.div`
-	font-family: Amsi Pro Narw;
-	font-style: normal;
-	font-weight: 800;
-	font-size: 14px;
-	line-height: 100%;
-	/* or 14px */
-
-	text-align: center;
-	letter-spacing: 1px;
-	text-transform: uppercase;
 `
 
 export default FeedListItem
