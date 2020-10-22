@@ -8,7 +8,7 @@ import React, {
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
-import { Group, Action } from 'types'
+import { Group, Action, Icons } from 'types'
 import FeedListItem from './FeedListItem'
 import { useDispatch } from 'react-redux'
 import { subscribeToMember } from 'store/slices/membersSlice'
@@ -27,6 +27,10 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 		[name: string]: {
 			[groupID: string]: number
 		}
+	}>({})
+
+	const [actionIcons, setActionIcons] = useState<{
+		[name: string]: Icons
 	}>({})
 
 	useEffect(() => {
@@ -59,7 +63,37 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 			}
 		}
 		setActionValues(actionGroupValues)
+
 	}, [groups])
+
+	useEffect(() => {
+		
+
+		if (groupID === '') {
+			const groupActionIcons: {
+				[name: string]: Icons
+			} = {}
+			for (const group of Object.values(groups)) {
+				const { icons } =  group
+	
+				for (const name of Object.values(icons)) {
+					groupActionIcons[name] = icons[name]
+				}
+			}
+
+			setActionIcons(groupActionIcons)
+		} else {
+
+			const group = groups[groupID]
+
+			if (group) setActionIcons(group.icons)
+			
+		}
+
+		
+	}, [groupID, groups])
+
+
 
 	useEffect(() => {
 		const unsubscribes: (() => void)[] = []
@@ -74,6 +108,9 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 		}
 	}, [dispatch, allMembers])
 
+
+	
+
 	const actions = Object.keys(allMembers)
 		.reduce((acc: Action[], uid) => {
 			if (!group) return [...acc, ...Object.values(allMembers[uid].actions)]
@@ -85,6 +122,7 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 		.map((action, i) => (
 			<FeedListItem
 				groupValues={actionValues[action.name] ? actionValues[action.name] : {}}
+				icon={actionIcons[action.name]}
 				action={action}
 				member={allMembers[action.uid]}
 				key={`${i}-feed-list-item`}

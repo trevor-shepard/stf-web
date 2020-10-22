@@ -2,36 +2,7 @@ import React, { FunctionComponent, Dispatch, SetStateAction, useState } from 're
 import styled from '@emotion/styled'
 import { Icons } from 'types'
 import { dropDown } from 'assets/icons'
-import {
-	apple,
-	beer,
-	bread,
-	dance,
-	drink,
-	fastfood,
-	heart,
-	mentalhealth,
-	poisen,
-	run,
-	sleep,
-	tv,
-	yoga
-} from 'assets/activity-icons'
-const IconLibrary = {
-	apple,
-	beer,
-	bread,
-	dance,
-	drink,
-	fastfood,
-	heart,
-	mentalhealth,
-	poisen,
-	run,
-	sleep,
-	tv,
-	yoga
-}
+import IconLibrary from 'assets/activity-icons/IconLibrary'
 
 interface Props {
     icon: Icons

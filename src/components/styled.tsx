@@ -6,6 +6,7 @@ export const ModalTitle = styled.div`
 	font-weight: 800;
 	font-size: 22px;
 	margin-top: 5%;
+	padding: 5px;
 `
 
 export const SubmitButton = styled.button`

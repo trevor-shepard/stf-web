@@ -1,9 +1,14 @@
 import React, { FunctionComponent } from 'react'
 import moment from 'moment'
 import styled from '@emotion/styled'
-import { Action, Member } from 'types'
+import { Action, Member, Icons } from 'types'
 import { EmptyProfile } from 'assets/icons'
+import IconLibrary from 'assets/activity-icons/IconLibrary'
+
 // import Star from './Star'
+
+
+
 interface FeedListItemProps {
 	action: Action
 	groupValues: {
@@ -11,13 +16,15 @@ interface FeedListItemProps {
 	}
 	member: Member
 	groupID?: string
+	icon: Icons
 }
 
 const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 	action,
 	member,
 	groupID,
-	groupValues
+	groupValues,
+	icon
 }) => {
 	const { username, photo } = member
 	const { date, name, quantity } = action
@@ -71,13 +78,9 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 				<PhotoContainer>
 					<Image src={actionPhoto} />
 				</PhotoContainer>
-			) : photo ? (
+			) :  (
 				<PhotoContainer>
-					<Image src={photo} />
-				</PhotoContainer>
-			) : (
-				<PhotoContainer>
-					<Image src={EmptyProfile} />
+					<Image src={IconLibrary[icon]} />
 				</PhotoContainer>
 			)}
 			{/* <Star quantity={quantity} value={value} /> */}

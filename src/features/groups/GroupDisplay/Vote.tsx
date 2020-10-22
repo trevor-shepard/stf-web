@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-
-
+import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import { requestVote } from 'store/slices/groupsSlice'
@@ -77,10 +76,13 @@ const Vote: FunctionComponent<Props> = ({
 				<div>loading</div>
 			) : (
 				<>
-					<ModalTitle>
+					<TitleBar>
 						<IconPicker icon={icon} setIcon={setIcon} />
-						{verb} 1 {unit.split('_').join(' ')} - {currAvg}
-					</ModalTitle>
+						<ModalTitle>	
+							{verb.split('_').join(' ')}  {unit.split('_').join(' ')} {currAvg}
+						</ModalTitle>
+					</TitleBar>
+					
 					<TextInput
 						handleInput={e => setVote(parseInt(e.target.value))}
 						value={vote.toString()}
@@ -95,5 +97,12 @@ const Vote: FunctionComponent<Props> = ({
 		</Modal>
 	)
 }
+const TitleBar = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: baseline;
+`
+
 
 export default Vote
