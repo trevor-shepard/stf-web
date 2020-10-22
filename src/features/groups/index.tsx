@@ -4,14 +4,14 @@ import { keyframes } from '@emotion/core'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import { subscribeToGroups } from 'store/slices/groupsSlice'
-import { add_round, hamburger } from 'assets/icons'
+import { hamburger, add } from 'assets/icons'
 import Header from 'components/Header'
 import Modal from 'components/Modal'
 import GroupDisplay from 'features/groups/GroupDisplay'
-import AddActivity from './AddActivity'
+import AddActivity from './GroupDisplay/AddActivity'
 import JoinGroup from './JoinGroup'
 import CreateGroup from './CreateGroup'
-
+import GroupSelector from 'components/Header/GroupSelector'
 const MobileGroups: FunctionComponent = () => {
 	const dispatch = useDispatch()
 	const groups = useSelector((state: RootState) => state.groups)
@@ -79,17 +79,31 @@ const MobileGroups: FunctionComponent = () => {
 				</Modal>
 			)}
 			<Header
-				groupID={groupID}
-				groups={groups}
-				selectGroup={setGroupID}
+				
+				Left={
+					<Add
+						src={add}
+						onClick={() => setAddActivityModal(!addActivityModal)}
+					/>
+				}
+				Middle={
+					<GroupSelector 
+						groupID={groupID}
+						groups={groups}
+						selectGroup={setGroupID}
+					/>
+				}
 				Right={
 					<HamburgerContainer onClick={e => e.stopPropagation()}>
-						<Hamburger src={hamburger} onClick={(e) => {
-							setShowHam(true)
-							e.stopPropagation()
-							}} />
-						{showHam && (
-							<HamburgerList>
+						<Hamburger
+							src={hamburger}
+							onClick={e => {
+								setShowHam(true)
+								e.stopPropagation()
+							}}
+						/>
+						
+							<HamburgerList show={showHam}>
 								<HamburgerListItem
 									onClick={() => {
 										setToggleNewGroupModal(false)
@@ -118,14 +132,9 @@ const MobileGroups: FunctionComponent = () => {
 									</HamburgerListItem>
 								)}
 							</HamburgerList>
-						)}
+						
 					</HamburgerContainer>
 				}
-			/>
-
-			<Add
-				src={add_round}
-				onClick={() => setAddActivityModal(!addActivityModal)}
 			/>
 
 			<OverflowContainer>
@@ -198,27 +207,31 @@ const OverflowContainer = styled.div`
 `
 
 const Add = styled.img`
-	position: fixed;
-	z-index: 10;
-	bottom: 90px;
-	right: 10%;
+	margin-left: 10px;
 `
 
 const HamburgerContainer = styled.div`
 	position: relative;
 `
-const HamburgerList = styled.div`
+
+interface HamburgerListProps {
+	show: boolean
+}
+const HamburgerList = styled.div<HamburgerListProps>`
+	display: ${({show}) => show ? `flex` : `none` };
 	position: absolute;
 	padding: 5px;
 	left: -125px;
 	bottom: -109px;
-	display: flex;
 	flex-direction: column;
 	background-color: #ffffff;
 	border: 1px solid black;
 	border-radius: 4%;
 `
+
+
 const HamburgerListItem = styled.div`
+	
 	font-family: Amsi Pro Narw;
 	font-style: normal;
 	font-weight: bold;

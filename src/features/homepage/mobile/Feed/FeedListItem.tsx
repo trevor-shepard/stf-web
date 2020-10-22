@@ -181,9 +181,7 @@ const Username = styled.div`
 	display: flex;
 	align-items: center;
 	color: #03361e;
-
 `
-
 
 const PhotoContainer = styled.div`
 	position: absolute;

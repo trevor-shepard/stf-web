@@ -36,7 +36,7 @@ const Navbar = styled.div`
 	justify-content: space-around;
 	align-items: center;
 	position: fixed;
-	bottom: 10px;
+	bottom: 0;
 	opacity: 1;
 	background-color: #ffff;
 	z-index: 10;

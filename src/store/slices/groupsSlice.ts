@@ -4,7 +4,7 @@ import { AppThunk } from '..'
 
 import { db } from 'utils/firebase'
 
-import { GroupsState, Group } from 'types'
+import { GroupsState, Group, Icons } from 'types'
 
 import { fetchMember } from './membersSlice'
 const initialState: GroupsState = {}
@@ -84,6 +84,10 @@ export const createGroup = (name: string): AppThunk => async (
 				sleep_in$hour: {
 					example: -4
 				}
+			},
+			icons: {
+				run$mile: 'run' as Icons,
+				sleep_in$hour: 'sleep' as Icons
 			}
 		}
 
@@ -137,7 +141,8 @@ export const joinGroup = (id: string): AppThunk => async (
 export const requestVote = (
 	groupID: string,
 	verb: string,
-	vote: number
+	vote: number,
+	icon: Icons
 ): AppThunk => async (dispatch, getState) => {
 	try {
 		const state = getState()
@@ -146,10 +151,10 @@ export const requestVote = (
 
 		const group = state.groups[groupID]
 
-		const activities = group.activities
+		const { icons, activities} = group
 
 		const votes = activities[verb]
-		
+
 		const updatedGroup = {
 			...group,
 			activities: {
@@ -158,6 +163,13 @@ export const requestVote = (
 					...votes,
 					[uid]: vote
 				}
+			}
+		}
+
+		if (icon !== icons[verb]) {
+			updatedGroup.icons = {
+				...icons,
+				[verb]: icon
 			}
 		}
 
@@ -177,7 +189,7 @@ export const requestVote = (
 			dispatch(recieveGroup(updatedGroup))
 		}
 	} catch (error) {
-		debugger
+		
 	}
 }
 
@@ -224,7 +236,8 @@ export const requestRemoveExampleVote = (
 export const addActivity = (
 	groupID: string,
 	verb: string,
-	vote: number
+	vote: number,
+	icon:Icons
 ): AppThunk => async (dispatch, getState) => {
 	try {
 		const state = getState()
@@ -233,7 +246,7 @@ export const addActivity = (
 
 		const group = state.groups[groupID]
 
-		const activities = group.activities
+		const {activities, icons} = group
 
 		const updatedGroup = {
 			...group,
@@ -242,6 +255,10 @@ export const addActivity = (
 				[verb]: {
 					[uid]: vote
 				}
+			},
+			icons: {
+				...icons,
+				[verb]: icon 
 			}
 		}
 

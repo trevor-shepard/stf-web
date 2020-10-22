@@ -1,32 +1,20 @@
-import React, { FunctionComponent, Dispatch, SetStateAction } from 'react'
-import GroupSelector from './GroupSelector'
+import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
-import { GroupsState } from 'types'
 interface Props {
-	groups: GroupsState
-	groupID: string
-	selectGroup: Dispatch<SetStateAction<string>>
 	Left?: FunctionComponent | JSX.Element | false
 	Right?: FunctionComponent | JSX.Element | false
+	Middle?: FunctionComponent | JSX.Element | false
 }
 
-const Screen: FunctionComponent<Props> = ({
-	groupID,
-	groups,
-	selectGroup,
+const Header: FunctionComponent<Props> = ({
 	Right,
-	Left
+	Left,
+	Middle,
 }) => {
 	return (
 		<Container>
 			<LeftContainer>{Left ? Left : <SpaceHolder />}</LeftContainer>
-
-			<GroupSelector
-				groupID={groupID}
-				selectGroup={selectGroup}
-				groups={groups}
-			/>
-
+			{Middle ? Middle : <SpaceHolder />}
 			<RightContainer>{Right ? Right : <SpaceHolder />}</RightContainer>
 		</Container>
 	)
@@ -58,4 +46,4 @@ const RightContainer = styled.div`
 	right: 10px;
 `
 
-export default Screen
+export default Header

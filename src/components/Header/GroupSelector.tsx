@@ -22,7 +22,8 @@ const Screen: FunctionComponent<HeaderProps> = ({
 	const [drop, setDrop] = useState(false)
 	const listValues = Object.values(groups).map(group => (
 		<GroupListItem
-			onClick={() => {
+			onClick={(e) => {
+				e.stopPropagation()
 				selectGroup(group.id)
 				setDrop(false)
 			}}
@@ -34,10 +35,11 @@ const Screen: FunctionComponent<HeaderProps> = ({
 	const group = groups[groupID]
 
 	return (
-		<Container>
+		<Container onClick={() => {
+		 if(drop) setDrop(false)}}>
 			<GroupName>{groupID ? group.name : 'AllGroups'}</GroupName>
 			{drop && <GroupList>{listValues}</GroupList>}
-			<DropDown src={dropDown} onClick={() => setDrop(!drop)} />
+			<DropDown drop={drop} src={dropDown} onClick={() => setDrop(!drop)} />
 		</Container>
 	)
 }
@@ -57,7 +59,12 @@ const GroupName = styled.div`
 	line-height: 120%;
 `
 
-const DropDown = styled.img`
+interface DropProps {
+	drop: boolean
+}
+
+const DropDown = styled.img<DropProps>`
+	${({drop}) => drop ? `transform: rotate(180deg);` : null }
 	height: 8px;
 	width: 16px;
 	position: absolute;
@@ -67,21 +74,27 @@ const DropDown = styled.img`
 const GroupList = styled.div`
 	z-index: 4;
 	position: absolute;
-	right: -75px;
-	bottom: -25px;
+	left: 0; 
+	right: 0; 
+	margin-left: auto; 
+	margin-right: auto; 
+	width: 125px; /* Need a specific value to work */
 	background-color: #ffffff;
 	z-index: 10;
 	border: 1px solid black;
-	border-radius: 4px;
 	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	top: 40px;
 `
 
 const GroupListItem = styled.div`
-	font-family: Mulish;
+	font-family: Amsi Pro Narw;
 	font-style: normal;
-	font-weight: bold;
-	font-size: 20px;
+	font-size: 12px;
 	line-height: 120%;
+	margin-bottom: 10px;
 `
 
 export default Screen

@@ -1,11 +1,16 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import Modal from 'components/Modal'
-import TextInput from 'components/inputs/text'
+
+
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import { requestVote } from 'store/slices/groupsSlice'
+import { Icons } from 'types'
+
 import { ModalTitle, SubmitButton } from 'components/styled'
+import Modal from 'components/Modal'
+import TextInput from 'components/inputs/text'
+import IconPicker from './IconPicker'
 
 interface Props {
 	hideModal: () => void
@@ -30,6 +35,7 @@ const Vote: FunctionComponent<Props> = ({
 	const [vote, setVote] = useState(0)
 	const [currAvg, setCurrAvg] = useState(0)
 	const [loading, setLoading] = useState(false)
+	const [icon, setIcon] = useState<Icons>(group.icons[name])
 
 	const [verb, unit] = name.split('$')
 
@@ -44,9 +50,8 @@ const Vote: FunctionComponent<Props> = ({
 	const dispatch = useDispatch()
 
 	const handleSubmit = async () => {
-		
 		setLoading(true)
-		await dispatch(requestVote(groupID, name, vote))
+		await dispatch(requestVote(groupID, name, vote, icon))
 		setLoading(false)
 	}
 
@@ -61,7 +66,7 @@ const Vote: FunctionComponent<Props> = ({
 
 		return (
 			<div key={`${i}-votes-item`}>
-				{username}      {memberVote ? memberVote : 'none'}
+				{username} {memberVote ? memberVote : 'none'}
 			</div>
 		)
 	})
@@ -73,6 +78,7 @@ const Vote: FunctionComponent<Props> = ({
 			) : (
 				<>
 					<ModalTitle>
+						<IconPicker icon={icon} setIcon={setIcon} />
 						{verb} 1 {unit.split('_').join(' ')} - {currAvg}
 					</ModalTitle>
 					<TextInput

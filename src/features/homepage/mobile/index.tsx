@@ -7,6 +7,7 @@ import Header from 'components/Header'
 import RecordActivity from './RecordActivity'
 import Feed from './Feed'
 import Standings from './Standings'
+import GroupSelector from 'components/Header/GroupSelector'
 const MobileHomepage: FunctionComponent = () => {
 	const groups = useSelector((state: RootState) => state.groups)
 	const [toggle, setToggle] = useState(false)
@@ -16,9 +17,15 @@ const MobileHomepage: FunctionComponent = () => {
 	return (
 		<Container>
 			<Header
-				groupID={groupID}
-				groups={groups}
-				selectGroup={setGroupID}
+				
+
+				Middle={
+					<GroupSelector 
+						groupID={groupID}
+						groups={groups}
+						selectGroup={setGroupID}
+					/>
+				}
 				Right={
 					<Right onClick={() => setToggle(!toggle)}>
 						{toggle ? 'Feed' : 'Standings'}
@@ -51,7 +58,7 @@ const Container = styled.div`
 const OverflowContainer = styled.div`
 	overflow: scroll;
 	height: 100%;
-	scroll-margin-bottom: 60px;
+	margin-bottom: 60px;
 `
 
 const Add = styled.img`

@@ -35,8 +35,12 @@ export interface Group {
 		[uid: string]: boolean
 	}
 	activities: {
-		// verb*unit (spaces are _)
+		// verb$unit (spaces are _)
 		[action: string]: Votes
+	}
+	icons: {
+		// verb$unit (spaces are _)
+		[action: string]: Icons
 	}
 }
 
@@ -68,3 +72,19 @@ export interface Member {
 export interface MembersState {
 	[uid: string]: Member
 }
+
+
+export type Icons = | 'run'
+| 'apple'
+| 'beer'
+| 'bread'
+| 'dance'
+| 'drink'
+| 'fastfood'
+| 'heart'
+| 'mentalhealth'
+| 'poisen'
+| 'run'
+| 'sleep'
+| 'tv'
+| 'yoga'
