@@ -151,7 +151,7 @@ export const requestVote = (
 
 		const group = state.groups[groupID]
 
-		const { icons, activities} = group
+		const { icons, activities } = group
 
 		const votes = activities[verb]
 
@@ -188,9 +188,7 @@ export const requestVote = (
 
 			dispatch(recieveGroup(updatedGroup))
 		}
-	} catch (error) {
-		
-	}
+	} catch (error) {}
 }
 
 export const requestRemoveExampleVote = (
@@ -237,7 +235,7 @@ export const addActivity = (
 	groupID: string,
 	verb: string,
 	vote: number,
-	icon:Icons
+	icon: Icons
 ): AppThunk => async (dispatch, getState) => {
 	try {
 		const state = getState()
@@ -246,7 +244,7 @@ export const addActivity = (
 
 		const group = state.groups[groupID]
 
-		const {activities, icons} = group
+		const { activities, icons } = group
 
 		const updatedGroup = {
 			...group,
@@ -258,7 +256,7 @@ export const addActivity = (
 			},
 			icons: {
 				...icons,
-				[verb]: icon 
+				[verb]: icon
 			}
 		}
 

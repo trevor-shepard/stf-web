@@ -78,11 +78,11 @@ const Vote: FunctionComponent<Props> = ({
 				<>
 					<TitleBar>
 						<IconPicker icon={icon} setIcon={setIcon} />
-						<ModalTitle>	
-							{verb.split('_').join(' ')}  {unit.split('_').join(' ')} {currAvg}
+						<ModalTitle>
+							{verb.split('_').join(' ')} {unit.split('_').join(' ')} {currAvg}
 						</ModalTitle>
 					</TitleBar>
-					
+
 					<TextInput
 						handleInput={e => setVote(parseInt(e.target.value))}
 						value={vote.toString()}
@@ -103,6 +103,5 @@ const TitleBar = styled.div`
 	justify-content: center;
 	align-items: baseline;
 `
-
 
 export default Vote

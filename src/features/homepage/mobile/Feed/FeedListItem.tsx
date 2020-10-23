@@ -1,13 +1,10 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, Dispatch, SetStateAction } from 'react'
 import moment from 'moment'
 import styled from '@emotion/styled'
 import { Action, Member, Icons } from 'types'
-import { EmptyProfile } from 'assets/icons'
 import IconLibrary from 'assets/activity-icons/IconLibrary'
 
 // import Star from './Star'
-
-
 
 interface FeedListItemProps {
 	action: Action
@@ -17,6 +14,7 @@ interface FeedListItemProps {
 	member: Member
 	groupID?: string
 	icon: Icons
+	setPhoto: Dispatch<SetStateAction<string>>
 }
 
 const FeedListItem: FunctionComponent<FeedListItemProps> = ({
@@ -24,11 +22,11 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 	member,
 	groupID,
 	groupValues,
-	icon
+	icon,
+	setPhoto
 }) => {
-	const { username, photo } = member
-	const { date, name, quantity } = action
-	const actionPhoto = action.photo
+	const { username } = member
+	const { date, name, quantity, photo } = action
 	const [verb, unit] = name.split('$')
 
 	const value = Math.floor(
@@ -53,7 +51,13 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 		.isSame(momentDate, 'day')
 
 	return (
-		<Container>
+		<Container
+			onClick={() => {
+				if (photo) {
+					setPhoto(photo)
+				}
+			}}
+		>
 			<Placeholder fame={fame}>.</Placeholder>
 			<ActivityBox fame={fame}>
 				<Username>{username}</Username>
@@ -74,16 +78,15 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 					{quantity} {unit.split('_').join(' ')}
 				</SubTitle>
 			</ScoreBox>
-			{actionPhoto ? (
+			{photo ? (
 				<PhotoContainer>
-					<Image src={actionPhoto} />
+					<Image src={photo} />
 				</PhotoContainer>
-			) :  (
+			) : (
 				<PhotoContainer>
 					<Image src={IconLibrary[icon]} />
 				</PhotoContainer>
 			)}
-			{/* <Star quantity={quantity} value={value} /> */}
 		</Container>
 	)
 }

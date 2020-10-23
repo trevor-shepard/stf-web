@@ -79,7 +79,6 @@ const MobileGroups: FunctionComponent = () => {
 				</Modal>
 			)}
 			<Header
-				
 				Left={
 					<Add
 						src={add}
@@ -87,7 +86,7 @@ const MobileGroups: FunctionComponent = () => {
 					/>
 				}
 				Middle={
-					<GroupSelector 
+					<GroupSelector
 						groupID={groupID}
 						groups={groups}
 						selectGroup={setGroupID}
@@ -102,37 +101,36 @@ const MobileGroups: FunctionComponent = () => {
 								e.stopPropagation()
 							}}
 						/>
-						
-							<HamburgerList show={showHam}>
+
+						<HamburgerList show={showHam}>
+							<HamburgerListItem
+								onClick={() => {
+									setToggleNewGroupModal(false)
+									setNewGroupModal(true)
+								}}
+							>
+								Create Group
+							</HamburgerListItem>
+							<HamburgerListItem
+								onClick={() => {
+									setToggleNewGroupModal(true)
+									setNewGroupModal(true)
+								}}
+							>
+								Join Group
+							</HamburgerListItem>
+							{isLocked === false && (
 								<HamburgerListItem
-									onClick={() => {
-										setToggleNewGroupModal(false)
-										setNewGroupModal(true)
+									onClick={async () => {
+										await navigator.clipboard.writeText(`${groupID}`)
+										setCopied(true)
 									}}
 								>
-									Create Group
+									copy invite code
+									{<Copied out={!copied}> copied to clipboard </Copied>}
 								</HamburgerListItem>
-								<HamburgerListItem
-									onClick={() => {
-										setToggleNewGroupModal(true)
-										setNewGroupModal(true)
-									}}
-								>
-									Join Group
-								</HamburgerListItem>
-								{isLocked === false && (
-									<HamburgerListItem
-										onClick={async () => {
-											await navigator.clipboard.writeText(`${groupID}`)
-											setCopied(true)
-										}}
-									>
-										copy invite code
-										{<Copied out={!copied}> copied to clipboard </Copied>}
-									</HamburgerListItem>
-								)}
-							</HamburgerList>
-						
+							)}
+						</HamburgerList>
 					</HamburgerContainer>
 				}
 			/>
@@ -218,7 +216,7 @@ interface HamburgerListProps {
 	show: boolean
 }
 const HamburgerList = styled.div<HamburgerListProps>`
-	display: ${({show}) => show ? `flex` : `none` };
+	display: ${({ show }) => (show ? `flex` : `none`)};
 	position: absolute;
 	padding: 5px;
 	left: -125px;
@@ -229,9 +227,7 @@ const HamburgerList = styled.div<HamburgerListProps>`
 	border-radius: 4%;
 `
 
-
 const HamburgerListItem = styled.div`
-	
 	font-family: Amsi Pro Narw;
 	font-style: normal;
 	font-weight: bold;

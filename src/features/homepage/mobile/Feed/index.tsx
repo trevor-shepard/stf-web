@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import { Group, Action, Icons } from 'types'
 import FeedListItem from './FeedListItem'
+import Modal from 'components/Modal'
 import { useDispatch } from 'react-redux'
 import { subscribeToMember } from 'store/slices/membersSlice'
 
@@ -23,6 +24,7 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 	const allMembers = useSelector((state: RootState) => state.members)
 	const groups = useSelector((state: RootState) => state.groups)
 	const group = groups[groupID] as Group
+	const [photo, setPhoto] = useState('')
 	const [actionValues, setActionValues] = useState<{
 		[name: string]: {
 			[groupID: string]: number
@@ -63,19 +65,16 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 			}
 		}
 		setActionValues(actionGroupValues)
-
 	}, [groups])
 
 	useEffect(() => {
-		
-
 		if (groupID === '') {
 			const groupActionIcons: {
 				[name: string]: Icons
 			} = {}
 			for (const group of Object.values(groups)) {
-				const { icons } =  group
-	
+				const { icons } = group
+
 				for (const name of Object.values(icons)) {
 					groupActionIcons[name] = icons[name]
 				}
@@ -83,17 +82,11 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 
 			setActionIcons(groupActionIcons)
 		} else {
-
 			const group = groups[groupID]
 
 			if (group) setActionIcons(group.icons)
-			
 		}
-
-		
 	}, [groupID, groups])
-
-
 
 	useEffect(() => {
 		const unsubscribes: (() => void)[] = []
@@ -107,9 +100,6 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 			}
 		}
 	}, [dispatch, allMembers])
-
-
-	
 
 	const actions = Object.keys(allMembers)
 		.reduce((acc: Action[], uid) => {
@@ -126,16 +116,37 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 				action={action}
 				member={allMembers[action.uid]}
 				key={`${i}-feed-list-item`}
+				setPhoto={setPhoto}
 			/>
 		))
 
-	return <Container>{actions}</Container>
+	return (
+		<Container>
+			{actions}
+
+			{photo !== '' && (
+				<Modal hideModal={() => setPhoto('')}>
+					<ImageContainer>
+						<Image src={photo} alt={'activity photo'} />
+					</ImageContainer>
+				</Modal>
+			)}
+		</Container>
+	)
 }
 
 const Container = styled.div`
 	margin-top: 4%;
 	flex-direction: column;
 	height: 100%;
+`
+const ImageContainer = styled.div`
+	height: 90%;
+	width: 90%;
+`
+const Image = styled.img`
+	 width: 100%;
+  height: 100%;
 `
 
 export default Feed

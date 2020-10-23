@@ -17,10 +17,8 @@ const MobileHomepage: FunctionComponent = () => {
 	return (
 		<Container>
 			<Header
-				
-
 				Middle={
-					<GroupSelector 
+					<GroupSelector
 						groupID={groupID}
 						groups={groups}
 						selectGroup={setGroupID}

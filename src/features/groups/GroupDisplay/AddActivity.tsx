@@ -13,7 +13,6 @@ interface Props {
 	groupID: string
 }
 
-
 const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
 	const [name, setName] = useState('')
 	const [unit, setUnit] = useState('')
@@ -36,14 +35,11 @@ const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
 		}
 	}
 
-
-
 	return (
 		<Modal hideModal={hideModal}>
 			<TitleBar>
-			
 				<IconPicker icon={icon} setIcon={setIcon} />
-				
+
 				<ModalTitle>add a activity</ModalTitle>
 			</TitleBar>
 			{error !== '' && error}
@@ -74,6 +70,5 @@ const TitleBar = styled.div`
 	justify-content: center;
 	align-items: center;
 `
-
 
 export default AddActivityModal

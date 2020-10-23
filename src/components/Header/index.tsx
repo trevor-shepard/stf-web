@@ -6,11 +6,7 @@ interface Props {
 	Middle?: FunctionComponent | JSX.Element | false
 }
 
-const Header: FunctionComponent<Props> = ({
-	Right,
-	Left,
-	Middle,
-}) => {
+const Header: FunctionComponent<Props> = ({ Right, Left, Middle }) => {
 	return (
 		<Container>
 			<LeftContainer>{Left ? Left : <SpaceHolder />}</LeftContainer>

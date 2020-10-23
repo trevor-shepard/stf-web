@@ -1,37 +1,43 @@
-import React, { FunctionComponent, Dispatch, SetStateAction, useState } from 'react'
+import React, {
+	FunctionComponent,
+	Dispatch,
+	SetStateAction,
+	useState
+} from 'react'
 import styled from '@emotion/styled'
 import { Icons } from 'types'
 import { dropDown } from 'assets/icons'
 import IconLibrary from 'assets/activity-icons/IconLibrary'
 
 interface Props {
-    icon: Icons
-    setIcon: Dispatch<SetStateAction<Icons>>
+	icon: Icons
+	setIcon: Dispatch<SetStateAction<Icons>>
 }
 
-const IconPicker: FunctionComponent<Props>= ({ icon, setIcon}) => {
+const IconPicker: FunctionComponent<Props> = ({ icon, setIcon }) => {
 	const [drop, setDrop] = useState(false)
 
+	const iconEls = Object.keys(IconLibrary)
+		.sort()
+		.map((name, i) => (
+			<Icon
+				key={`icon-${i}`}
+				src={IconLibrary[name as Icons]}
+				onClick={() => {
+					setIcon(name as Icons)
+					setDrop(false)
+				}}
+			/>
+		))
 
-    const iconEls = Object.keys(IconLibrary).sort().map((name, i) => <Icon key={`icon-${i}`} src={IconLibrary[name as Icons]} onClick={() => {
-		setIcon(name as Icons)
-		setDrop(false)
-    }} />)
-    
-    return (
-        <Container>
-					<Icon src={IconLibrary[icon]} />
-					<DropDown drop={drop} src={dropDown} onClick={() => setDrop(!drop)} />
-					{drop && 
-						<IconList>
-							{iconEls}
-						</IconList>
-					}
-				</Container>
-    )
+	return (
+		<Container>
+			<Icon src={IconLibrary[icon]} />
+			<DropDown drop={drop} src={dropDown} onClick={() => setDrop(!drop)} />
+			{drop && <IconList>{iconEls}</IconList>}
+		</Container>
+	)
 }
-
-
 
 const Container = styled.div`
 	position: relative;
@@ -43,10 +49,10 @@ const Icon = styled.img`
 const IconList = styled.div`
 	z-index: 4;
 	position: absolute;
-	left: 0; 
-	right: 0; 
-	margin-left: auto; 
-	margin-right: auto; 
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
 	width: 30px; /* Need a specific value to work */
 	background-color: #ffffff;
 	z-index: 10;
@@ -56,7 +62,6 @@ const IconList = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	top: 40px;
-
 `
 
 interface DropProps {
@@ -64,7 +69,7 @@ interface DropProps {
 }
 
 const DropDown = styled.img<DropProps>`
-	${({drop}) => drop ? `transform: rotate(180deg);` : null }
+	${({ drop }) => (drop ? `transform: rotate(180deg);` : null)}
 	height: 8px;
 	width: 16px;
 	position: absolute;
@@ -72,9 +77,4 @@ const DropDown = styled.img<DropProps>`
 	top: 10px;
 `
 
-
-
-
-
-
-export default IconPicker;
+export default IconPicker

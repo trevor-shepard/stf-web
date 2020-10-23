@@ -22,7 +22,7 @@ const Screen: FunctionComponent<HeaderProps> = ({
 	const [drop, setDrop] = useState(false)
 	const listValues = Object.values(groups).map(group => (
 		<GroupListItem
-			onClick={(e) => {
+			onClick={e => {
 				e.stopPropagation()
 				selectGroup(group.id)
 				setDrop(false)
@@ -35,8 +35,11 @@ const Screen: FunctionComponent<HeaderProps> = ({
 	const group = groups[groupID]
 
 	return (
-		<Container onClick={() => {
-		 if(drop) setDrop(false)}}>
+		<Container
+			onClick={() => {
+				if (drop) setDrop(false)
+			}}
+		>
 			<GroupName>{groupID ? group.name : 'AllGroups'}</GroupName>
 			{drop && <GroupList>{listValues}</GroupList>}
 			<DropDown drop={drop} src={dropDown} onClick={() => setDrop(!drop)} />
@@ -64,7 +67,7 @@ interface DropProps {
 }
 
 const DropDown = styled.img<DropProps>`
-	${({drop}) => drop ? `transform: rotate(180deg);` : null }
+	${({ drop }) => (drop ? `transform: rotate(180deg);` : null)}
 	height: 8px;
 	width: 16px;
 	position: absolute;
@@ -74,10 +77,10 @@ const DropDown = styled.img<DropProps>`
 const GroupList = styled.div`
 	z-index: 4;
 	position: absolute;
-	left: 0; 
-	right: 0; 
-	margin-left: auto; 
-	margin-right: auto; 
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
 	width: 125px; /* Need a specific value to work */
 	background-color: #ffffff;
 	z-index: 10;

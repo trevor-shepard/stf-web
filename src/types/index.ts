@@ -73,18 +73,18 @@ export interface MembersState {
 	[uid: string]: Member
 }
 
-
-export type Icons = | 'run'
-| 'apple'
-| 'beer'
-| 'bread'
-| 'dance'
-| 'drink'
-| 'fastfood'
-| 'heart'
-| 'mentalhealth'
-| 'poisen'
-| 'run'
-| 'sleep'
-| 'tv'
-| 'yoga'
+export type Icons =
+	| 'run'
+	| 'apple'
+	| 'beer'
+	| 'bread'
+	| 'dance'
+	| 'drink'
+	| 'fastfood'
+	| 'heart'
+	| 'mentalhealth'
+	| 'poisen'
+	| 'run'
+	| 'sleep'
+	| 'tv'
+	| 'yoga'
