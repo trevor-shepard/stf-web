@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import TextInput from 'components/inputs/text'
 import { ModalTitle, ModalSubTitle, SubmitButton } from 'components/styled'
 import { recordActivity } from 'store/slices/membersSlice'
+import {camera_create} from 'assets/icons'
 interface Props {
 	activity: string
 	hideModal: () => void
@@ -55,16 +56,25 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 						{verb.split('_').join(' ')} {unit.split('_').join(' ')}
 					</ModalTitle>
 					{error && <Error>{error}</Error>}
-
-					<ModalSubTitle>
-						{date} at {time}
-					</ModalSubTitle>
-					{fileAsImage && (
 						<ImgContainer>
-							<Image src={fileAsImage} />
+							{
+							
+							fileAsImage ? <Image src={fileAsImage} />  : (
+							
+								<FileInputLabel>
+									<Image src={camera_create} />
+									<FileInput id="upload" type="file" onChange={handleImageAsFile} />
+								</FileInputLabel >
+							
+							)
+							}
+
+
+							
+						
+	
 						</ImgContainer>
-					)}
-					<FileInput id="upload" type="file" onChange={handleImageAsFile} />
+					
 
 					<TextInput
 						handleInput={e => setQuantity(parseInt(e.target.value))}
@@ -115,7 +125,10 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 	)
 }
 
-const FileInput = styled.input``
+const FileInput = styled.input`
+	display: none;
+`
+const FileInputLabel = styled.label``
 
 const ImgContainer = styled.div`
 	margin-top: 10%;

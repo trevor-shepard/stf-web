@@ -12,35 +12,38 @@ const MobileHomepage: FunctionComponent = () => {
 	const groups = useSelector((state: RootState) => state.groups)
 	const [toggle, setToggle] = useState(false)
 	const [groupID, setGroupID] = useState('')
-	const [showRecord, setShowRecord] = useState(false)
+	const [Record, setRecord] = useState(false)
 
 	return (
 		<Container>
-			<Header
-				Middle={
-					<GroupSelector
-						groupID={groupID}
-						groups={groups}
-						selectGroup={setGroupID}
+			{Record ? (
+				<RecordActivity hideModal={() => setRecord(false)} />
+			) : (
+				<>
+					<Header
+						Middle={
+							<GroupSelector
+								groupID={groupID}
+								groups={groups}
+								selectGroup={setGroupID}
+							/>
+						}
+						Right={
+							<Right onClick={() => setToggle(!toggle)}>
+								{toggle ? 'Feed' : 'Standings'}
+							</Right>
+						}
 					/>
-				}
-				Right={
-					<Right onClick={() => setToggle(!toggle)}>
-						{toggle ? 'Feed' : 'Standings'}
-					</Right>
-				}
-			/>
-			{showRecord && <RecordActivity hideModal={() => setShowRecord(false)} />}
-
-			<Add src={add_round} onClick={() => setShowRecord(true)} />
-
-			<OverflowContainer>
-				{toggle ? (
-					<Standings setGroupID={setGroupID} groupID={groupID} />
-				) : (
-					<Feed setGroupID={setGroupID} groupID={groupID} />
-				)}
-			</OverflowContainer>
+					<Add src={add_round} onClick={() => setRecord(true)} />
+					<OverflowContainer>
+						{toggle ? (
+							<Standings setGroupID={setGroupID} groupID={groupID} />
+						) : (
+							<Feed setGroupID={setGroupID} groupID={groupID} />
+						)}
+					</OverflowContainer>
+				</>
+			)}
 		</Container>
 	)
 }
@@ -63,7 +66,7 @@ const Add = styled.img`
 	position: fixed;
 	z-index: 10;
 	bottom: 90px;
-	right: 10%;
+	right: 0;
 `
 
 const Right = styled.div`

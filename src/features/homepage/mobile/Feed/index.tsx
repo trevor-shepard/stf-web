@@ -10,7 +10,9 @@ import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import { Group, Action, Icons } from 'types'
 import FeedListItem from './FeedListItem'
-import Modal from 'components/Modal'
+import Photo from './Photo'
+
+
 import { useDispatch } from 'react-redux'
 import { subscribeToMember } from 'store/slices/membersSlice'
 
@@ -122,15 +124,13 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 
 	return (
 		<Container>
-			{actions}
+			
 
-			{photo !== '' && (
-				<Modal hideModal={() => setPhoto('')}>
-					<ImageContainer>
-						<Image src={photo} alt={'activity photo'} />
-					</ImageContainer>
-				</Modal>
-			)}
+			{photo !== '' ? (
+				
+					<Photo setPhoto={setPhoto} photo={photo} />
+			
+			) : actions}
 		</Container>
 	)
 }
@@ -140,13 +140,6 @@ const Container = styled.div`
 	flex-direction: column;
 	height: 100%;
 `
-const ImageContainer = styled.div`
-	height: 90%;
-	width: 90%;
-`
-const Image = styled.img`
-	 width: 100%;
-  height: 100%;
-`
+
 
 export default Feed

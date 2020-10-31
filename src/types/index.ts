@@ -83,7 +83,7 @@ export type Icons =
 	| 'fastfood'
 	| 'heart'
 	| 'mentalhealth'
-	| 'poisen'
+	| 'poison'
 	| 'run'
 	| 'sleep'
 	| 'tv'

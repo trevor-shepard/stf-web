@@ -194,11 +194,9 @@ const PhotoContainer = styled.div`
 	left: -6%;
 	top: -4px;
 	width: 70px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	z-index: 10;
+	
+	border-radius: 45.2129020690918px;
 `
 
 const Image = styled.img`
@@ -207,6 +205,8 @@ const Image = styled.img`
 	border-radius: 45.2129020690918px;
 	margin-bottom: 5px;
 	border: 1px solid #7c8c9a;
+	margin: 0 auto;
+	background-color: #ffffff;
 `
 
 export default FeedListItem
