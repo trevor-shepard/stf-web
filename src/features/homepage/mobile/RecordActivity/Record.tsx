@@ -69,9 +69,6 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 							)
 							}
 
-
-							
-						
 	
 						</ImgContainer>
 					
@@ -127,6 +124,7 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 
 const FileInput = styled.input`
 	display: none;
+	font-size: 16 px;
 `
 const FileInputLabel = styled.label``
 
