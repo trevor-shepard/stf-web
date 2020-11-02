@@ -195,7 +195,6 @@ const PhotoContainer = styled.div`
 	top: -4px;
 	width: 70px;
 	z-index: 10;
-	
 	border-radius: 45.2129020690918px;
 `
 

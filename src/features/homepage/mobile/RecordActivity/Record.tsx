@@ -3,9 +3,9 @@ import styled from '@emotion/styled'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
 import TextInput from 'components/inputs/text'
-import { ModalTitle, ModalSubTitle, SubmitButton } from 'components/styled'
+import { ModalTitle, SubmitButton } from 'components/styled'
 import { recordActivity } from 'store/slices/membersSlice'
-import {camera_create} from 'assets/icons'
+import { camera_create } from 'assets/icons'
 interface Props {
 	activity: string
 	hideModal: () => void
@@ -56,22 +56,20 @@ const Record: FunctionComponent<Props> = ({ activity, hideModal }) => {
 						{verb.split('_').join(' ')} {unit.split('_').join(' ')}
 					</ModalTitle>
 					{error && <Error>{error}</Error>}
-						<ImgContainer>
-							{
-							
-							fileAsImage ? <Image src={fileAsImage} />  : (
-							
-								<FileInputLabel>
-									<Image src={camera_create} />
-									<FileInput id="upload" type="file" onChange={handleImageAsFile} />
-								</FileInputLabel >
-							
-							)
-							}
-
-	
-						</ImgContainer>
-					
+					<ImgContainer>
+						{fileAsImage ? (
+							<Image src={fileAsImage} />
+						) : (
+							<FileInputLabel>
+								<Image src={camera_create} />
+								<FileInput
+									id="upload"
+									type="file"
+									onChange={handleImageAsFile}
+								/>
+							</FileInputLabel>
+						)}
+					</ImgContainer>
 
 					<TextInput
 						handleInput={e => setQuantity(parseInt(e.target.value))}

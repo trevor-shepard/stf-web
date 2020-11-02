@@ -12,7 +12,6 @@ import { Group, Action, Icons } from 'types'
 import FeedListItem from './FeedListItem'
 import Photo from './Photo'
 
-
 import { useDispatch } from 'react-redux'
 import { subscribeToMember } from 'store/slices/membersSlice'
 
@@ -124,13 +123,7 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 
 	return (
 		<Container>
-			
-
-			{photo !== '' ? (
-				
-					<Photo setPhoto={setPhoto} photo={photo} />
-			
-			) : actions}
+			{photo !== '' ? <Photo setPhoto={setPhoto} photo={photo} /> : actions}
 		</Container>
 	)
 }
@@ -140,6 +133,5 @@ const Container = styled.div`
 	flex-direction: column;
 	height: 100%;
 `
-
 
 export default Feed

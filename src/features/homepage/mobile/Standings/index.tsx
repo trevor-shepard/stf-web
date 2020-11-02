@@ -15,11 +15,13 @@ interface Props {
 	setGroupID: Dispatch<SetStateAction<string>>
 }
 
-const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
+const Standings: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 	const allMembers = useSelector((state: RootState) => state.members)
 	const groups = useSelector((state: RootState) => state.groups)
-
 	const group = groups[groupID] as Group
+
+	let highScore = 0
+	let lowScore = 0
 
 	useEffect(() => {
 		const firstGroup = Object.values(groups)[0]
@@ -45,8 +47,8 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 
 	const memberIDs = group.members as string[]
 
-	let members = memberIDs
-		.reduce((acc: { member: Member; score: number }[], id) => {
+	const memberScores = memberIDs.reduce(
+		(acc: { member: Member; score: number }[], id) => {
 			const member = allMembers[id]
 			const actions = member.actions
 
@@ -59,7 +61,9 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 				}
 			}
 
-			if (member)
+			if (member) {
+				if (score > highScore) highScore = score
+				if (score < lowScore) lowScore = score
 				return [
 					...acc,
 					{
@@ -67,9 +71,14 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 						score
 					}
 				]
+			}
 
 			return acc
-		}, [])
+		},
+		[]
+	)
+
+	const members = memberScores
 		.sort((a, b) => b.score - a.score)
 		.map(({ member, score }, i) => (
 			<MemberComponent
@@ -77,6 +86,8 @@ const Feed: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 				rank={i + 1}
 				member={member}
 				score={score}
+				highScore={highScore}
+				lowScore={lowScore}
 			/>
 		))
 
@@ -89,4 +100,4 @@ const Container = styled.div`
 	height: 100%;
 `
 
-export default Feed
+export default Standings

@@ -28,8 +28,10 @@
     "react-responsive-carousel": "^3.2.10",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-spring": "^8.0.27",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
+    "resize-observer-polyfill": "^1.5.1",
     "typescript": "^3.7.5"
   },
   "scripts": {
