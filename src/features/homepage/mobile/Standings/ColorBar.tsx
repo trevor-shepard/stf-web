@@ -7,7 +7,7 @@ const ColorBar: FunctionComponent<{ width: number; score: number }> = ({
 	score
 }) => {
 	const props = useSpring({
-		width: width < 150 ? 150 : width,
+		width: width < 200 ? 200 : width,
 		score,
 		from: { width: 0, score: 0 },
 		config: {
