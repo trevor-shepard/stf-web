@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef } from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
-import { EmptyProfile, first, second, third} from 'assets/icons'
+import { EmptyProfile, first, second, third } from 'assets/icons'
 import ColorBar from './ColorBar'
 import { Member } from 'types'
 import useContainerDimensions from 'utils/useContainerDimentions'
@@ -21,7 +21,7 @@ const MemberComponent: FunctionComponent<Props> = ({
 	highScore,
 	lowScore
 }) => {
-	const {uid} = useSelector((state: RootState) => state.user)
+	const { uid } = useSelector((state: RootState) => state.user)
 	const ref = useRef<HTMLHeadingElement>(null)
 	const { photo, username } = member
 	const { containerWidth } = useContainerDimensions(ref)
@@ -32,20 +32,20 @@ const MemberComponent: FunctionComponent<Props> = ({
 	const barWidth = percent * containerWidth - 50
 
 	let rankDisplay: JSX.Element | undefined
-	
+
 	switch (rank) {
 		case 1:
-			rankDisplay = <RankImg src={first} alt='first place' />
-			break;
+			rankDisplay = <RankImg src={first} alt="first place" />
+			break
 		case 2:
-			rankDisplay = <RankImg src={second} alt='second place' />
-			break;
+			rankDisplay = <RankImg src={second} alt="second place" />
+			break
 		case 3:
-			rankDisplay = <RankImg src={third} alt='third place' />
-			break;
+			rankDisplay = <RankImg src={third} alt="third place" />
+			break
 
 		default:
-			break;
+			break
 	}
 
 	return (
@@ -65,13 +65,13 @@ const MemberComponent: FunctionComponent<Props> = ({
 			)}
 			{containerWidth !== 0 && <ColorBar width={barWidth} score={score} />}
 			<GreyContainer>
-				<Rank >{ rankDisplay ? rankDisplay : rank}</Rank>
+				<Rank>{rankDisplay ? rankDisplay : rank}</Rank>
 			</GreyContainer>
 		</Container>
 	)
 }
 
-const Container = styled.div<{podium: boolean, isSelf: boolean}>`
+const Container = styled.div<{ podium: boolean; isSelf: boolean }>`
 	background: #c4c4c4 40%;
 	width: 100%;
 	display: flex;
@@ -79,8 +79,8 @@ const Container = styled.div<{podium: boolean, isSelf: boolean}>`
 	position: relative;
 	margin-bottom: 60px;
 	z-index: -20;
-	${({podium}) => podium && 'background-color: #FFD218;'}
-	${({isSelf}) => isSelf && 'border: 4px solid grey'}
+	${({ podium }) => podium && 'background-color: #FFD218;'}
+	${({ isSelf }) => isSelf && 'border: 4px solid grey'}
 `
 
 const Username = styled.div`
@@ -145,6 +145,6 @@ const Rank = styled.div`
 const RankImg = styled.img`
 	height: 40px;
 	width: 40px;
-`	
+`
 
 export default MemberComponent

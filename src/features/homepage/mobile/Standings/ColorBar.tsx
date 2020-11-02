@@ -43,7 +43,6 @@ const Score = styled(animated.div)`
 	font-size: 40px;
 	padding-right: 10px;
 	transform: skew(20deg);
-	
 `
 
 export default ColorBar

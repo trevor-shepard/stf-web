@@ -13,7 +13,6 @@ import IconPicker from './IconPicker'
 
 interface Props {
 	hideModal: () => void
-
 	name: string
 	votes: {
 		[uid: string]: number
@@ -31,25 +30,30 @@ const Vote: FunctionComponent<Props> = ({
 	const uid = useSelector((state: RootState) => state.user.uid) as string
 	const members = useSelector((state: RootState) => state.members)
 	const group = useSelector((state: RootState) => state.groups[groupID])
-	const [vote, setVote] = useState(0)
+	const [vote, setVote] = useState<number | '-' | null>(0)
 	const [currAvg, setCurrAvg] = useState(0)
 	const [loading, setLoading] = useState(false)
 	const [icon, setIcon] = useState<Icons>(group.icons[name])
+	const [initalVote, setInititalVote] = useState(false)
 
 	const [verb, unit] = name.split('$')
 
 	useEffect(() => {
-		if (vote === 0 && votes[uid]) setVote(votes[uid])
+		if (votes[uid] && !initalVote) {
+			setVote(votes[uid])
+			setInititalVote(true)
+		}
 		const avg =
 			Object.values(votes).reduce((acc, curr) => acc + curr) /
 			Object.values(votes).length
 		setCurrAvg(avg)
-	}, [votes, uid, vote])
+	}, [votes, uid, initalVote])
 
 	const dispatch = useDispatch()
 
 	const handleSubmit = async () => {
 		setLoading(true)
+		if (!vote || vote === '-') return
 		await dispatch(requestVote(groupID, name, vote, icon))
 		setLoading(false)
 	}
@@ -84,8 +88,13 @@ const Vote: FunctionComponent<Props> = ({
 					</TitleBar>
 
 					<TextInput
-						handleInput={e => setVote(parseInt(e.target.value))}
-						value={vote.toString()}
+						handleInput={e => {
+							const val = e.target.value
+							const num =
+								val !== '' ? (val === '-' ? '-' : parseInt(val)) : null
+							setVote(num)
+						}}
+						value={vote ? vote.toString() : ''}
 						type={'number'}
 						label={'Your Vote'}
 					/>

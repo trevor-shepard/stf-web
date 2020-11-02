@@ -40,7 +40,7 @@ const GroupDisplay: FunctionComponent<Props> = ({ group }) => {
 		.map(({ name, score }, i) => {
 			const [verb, unit] = name.split('$')
 			return (
-				<Activity key={`${i}-activity-fame-item`} onClick={() => setName(name)}>
+				<Activity value={score > 0} key={`${i}-activity-fame-item`} onClick={() => setName(name)}>
 					<ActivityDetail>
 						{verb.split('_').join(' ')} 1 {unit.split('_').join(' ')}
 					</ActivityDetail>
@@ -71,8 +71,8 @@ const Container = styled.div`
 	justify-content: space-between;
 `
 
-const Activity = styled.div`
-	background: #c4c4c4 40%;
+const Activity = styled.div<{ value: boolean }>`
+	background: ${({ value }) => (value ? '#00A757' : '#F45757')};
 	height: 55px;
 	display: flex;
 	flex-direction: row;
@@ -81,6 +81,7 @@ const Activity = styled.div`
 	padding-left: 10px;
 	padding-right: 30px;
 	margin-bottom: 30px;
+	border-left: 5px solid ${({ value }) => (value ? '#024323' : '#720D0D')};
 `
 
 const ActivityDetail = styled.div`
