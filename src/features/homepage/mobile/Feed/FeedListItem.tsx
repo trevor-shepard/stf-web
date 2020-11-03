@@ -194,18 +194,20 @@ const PhotoContainer = styled.div`
 	left: -6%;
 	top: -4px;
 	width: 70px;
+	height: 70px;
 	z-index: 10;
-	border-radius: 45.2129020690918px;
+	border-radius: 50%;
+	overflow: hidden;
+	border: 1px solid #7c8c9a;
+	background-color:black;
 `
 
 const Image = styled.img`
-	height: 62px;
-	width: 61px;
-	border-radius: 45.2129020690918px;
 	margin-bottom: 5px;
-	border: 1px solid #7c8c9a;
 	margin: 0 auto;
 	background-color: #ffffff;
+	width: 100%;
+    height: auto;
 `
 
 export default FeedListItem
