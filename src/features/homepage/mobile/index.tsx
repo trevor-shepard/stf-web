@@ -38,13 +38,13 @@ const MobileHomepage: FunctionComponent = () => {
 						</Right>
 					</Toggle>
 					<Add src={add_round} onClick={() => setRecord(true)} />
-					<OverflowContainer>
+					
 						{toggle ? (
 							<Standings setGroupID={setGroupID} groupID={groupID} />
 						) : (
 							<Feed setGroupID={setGroupID} groupID={groupID} />
 						)}
-					</OverflowContainer>
+					
 				</>
 			)}
 		</Container>
@@ -57,12 +57,7 @@ const Container = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	overflow: none;
-`
-
-const OverflowContainer = styled.div`
-	overflow: scroll;
-	height: 100%;
-	margin-bottom: 60px;
+	position: relative;
 `
 
 const Add = styled.img`
@@ -79,9 +74,10 @@ const Toggle = styled.div`
 	flex-direction:row;
 	justify-content: center;
 	align-items: center;
-	
   	border-bottom-left-radius: 50%;
-
+	position: absolute;
+	top: 61px;
+	z-index: 20;
 `
 
 const Tab = styled.div<{selected: boolean}>`
@@ -105,7 +101,7 @@ const Right = styled(Tab)`
 `
 const Left = styled(Tab)`
 	border-bottom-left-radius: 90%;
-	justify-content: flex-end
+	justify-content: flex-end;
 `
 
 export default MobileHomepage

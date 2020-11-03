@@ -95,9 +95,11 @@ const Standings: FunctionComponent<Props> = ({ groupID, setGroupID }) => {
 }
 
 const Container = styled.div`
-	margin-top: 4%;
+	padding-top: 65px;
 	flex-direction: column;
 	height: 100%;
+	overflow: scroll;
+	padding-bottom: 59px;
 `
 
 export default Standings
