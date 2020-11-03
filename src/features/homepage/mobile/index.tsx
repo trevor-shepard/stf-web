@@ -28,12 +28,15 @@ const MobileHomepage: FunctionComponent = () => {
 								selectGroup={setGroupID}
 							/>
 						}
-						Right={
-							<Right onClick={() => setToggle(!toggle)}>
-								{toggle ? 'Feed' : 'Standings'}
-							</Right>
-						}
 					/>
+					<Toggle>
+						<Left onClick={()=> setToggle(false)} selected={!toggle}>
+							Feed
+						</Left>
+						<Right onClick={()=> setToggle(true)} selected={toggle}>
+							Standings
+						</Right>
+					</Toggle>
 					<Add src={add_round} onClick={() => setRecord(true)} />
 					<OverflowContainer>
 						{toggle ? (
@@ -69,13 +72,40 @@ const Add = styled.img`
 	right: 0;
 `
 
-const Right = styled.div`
+const Toggle = styled.div`
+	width: 100%;
+	height: 60px;
+	display: flex;
+	flex-direction:row;
+	justify-content: center;
+	align-items: center;
+	
+  	border-bottom-left-radius: 50%;
+
+`
+
+const Tab = styled.div<{selected: boolean}>`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction:row;
+	align-items: center;
 	font-family: Amsi Pro Narw;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 18px;
 	line-height: 120%;
-	margin-left: 10px;
+	background-color: ${({selected}) => selected ? '#F0C71B' :'#FFE36E'};
+	padding-left: 40px;
+	padding-right: 50px;
+`
+
+const Right = styled(Tab)`
+	border-bottom-right-radius: 90%;
+`
+const Left = styled(Tab)`
+	border-bottom-left-radius: 90%;
+	justify-content: flex-end
 `
 
 export default MobileHomepage

@@ -73,7 +73,7 @@ const FeedListItem: FunctionComponent<FeedListItemProps> = ({
 				</SubTitle>
 			</ActivityBox>
 			<ScoreBox fame={fame}>
-				<ScoreTitle>{score}</ScoreTitle>
+						<ScoreTitle>{score > 0 && "+"}{score}</ScoreTitle>
 				<SubTitle>
 					{quantity} {unit.split('_').join(' ')}
 				</SubTitle>
@@ -109,7 +109,7 @@ interface BoxProps {
 const Placeholder = styled.div<BoxProps>`
 	background-color: ${({ fame }) => (fame ? '#03753E' : '#C22626')};
 	transform: skew(-20deg);
-	width: 55px;
+	width:75px;
 	border-top-left-radius: 100px;
 	border-bottom-left-radius: 100px;
 `
