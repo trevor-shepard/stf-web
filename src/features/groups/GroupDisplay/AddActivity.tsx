@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, ChangeEvent } from 'react'
 import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
 import Modal from 'components/Modal'
@@ -16,10 +16,18 @@ interface Props {
 const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
 	const [name, setName] = useState('')
 	const [unit, setUnit] = useState('')
-	const [vote, setVote] = useState(0)
+	const [vote, setVote] = useState<number | '-' | null>(0)
 	const [error, setError] = useState('')
 	const [icon, setIcon] = useState<Icons>('run')
 	const dispatch = useDispatch()
+
+	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+		const val = e.target.value
+		const num =
+			val !== '' ? (val === '-' ? '-' : parseInt(val)) : null
+		setVote(num)
+	}
+
 
 	const handleAdd = async () => {
 		if (name === '') {
@@ -27,6 +35,8 @@ const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
 		} else if (unit === '') {
 			setError('unit cant be blank')
 		} else {
+
+			if (!vote || vote === '-') return setError('vote invalid')
 			const activity = `${name.split(' ').join('_')}$${unit
 				.split(' ')
 				.join('_')}`.toLocaleLowerCase()
@@ -54,10 +64,10 @@ const AddActivityModal: FunctionComponent<Props> = ({ hideModal, groupID }) => {
 				label={'action unit'}
 			/>
 			<TextInput
-				handleInput={e => setVote(Math.abs(parseInt(e.target.value)))}
-				value={vote.toString()}
+				handleInput={handleInput}
+				value={vote ? vote.toString() : ''}
 				type={'number'}
-				label={'Your Vote'}
+				label={'your vote'}
 			/>
 			<SubmitButton onClick={handleAdd}>Submit</SubmitButton>
 		</Modal>

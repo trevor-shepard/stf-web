@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent, useState, useEffect, ChangeEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
@@ -58,6 +58,13 @@ const Vote: FunctionComponent<Props> = ({
 		setLoading(false)
 	}
 
+	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+		const val = e.target.value
+		const num =
+			val !== '' ? (val === '-' ? '-' : parseInt(val)) : null
+		setVote(num)
+	}
+
 	const MemberVotes = group.members.map((uid, i) => {
 		if (uid === 'example') {
 			return <div>Example - {votes[uid]}</div>
@@ -88,12 +95,7 @@ const Vote: FunctionComponent<Props> = ({
 					</TitleBar>
 
 					<TextInput
-						handleInput={e => {
-							const val = e.target.value
-							const num =
-								val !== '' ? (val === '-' ? '-' : parseInt(val)) : null
-							setVote(num)
-						}}
+						handleInput={handleInput}
 						value={vote ? vote.toString() : ''}
 						type={'number'}
 						label={'Your Vote'}
